@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import {User} from "../models/user";
 import {validateRequest} from "../middlewares/validate-request";
+import {BadRequestError} from "../errors/bad-request-error";
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.post('/api/auth/signup',
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-        throw new Error('Email is in use');
+        throw new BadRequestError('Email is in use');
     }
 
     const user = User.build({ email, password });
