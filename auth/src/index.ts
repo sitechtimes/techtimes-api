@@ -1,8 +1,8 @@
 import { app } from './app';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import env from 'dotenv';
 
-dotenv.config({ path: `${__dirname}/../../.env.development`});
+env.config({ path: `${__dirname}/../../.env.development`});
 
 const start = async  () => {
     if (!process.env.MONGO_URI){

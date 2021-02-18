@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { User } from "../models/user";
+import { validateRequest } from "../middlewares/validate-request";
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.post('/api/auth/signup',
             .trim()
             .isLength({min: 8, max: 16})
             .withMessage('Password must be between 8 and 16 characters')
-    ], async (req: Request, res: Response) => {
+    ], validateRequest, async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
 
