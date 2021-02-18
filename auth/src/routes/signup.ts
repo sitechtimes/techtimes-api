@@ -33,7 +33,7 @@ router.post('/api/auth/signup',
     const userJWT = jwt.sign({
         id: user.id,
         email: user.email
-    }, process.env.JWT_KEY!);
+    }, process.env.JWT_KEY!, { expiresIn: '6h' });
 
     req.session = {
         jwt: userJWT
