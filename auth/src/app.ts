@@ -6,6 +6,7 @@ import cookieSession from "cookie-session";
 import {errorHandler} from "./middlewares/error-handler";
 import {signupRouter} from "./routes/signup";
 import {signinRouter} from "./routes/signin";
+import {currentUserRouter} from "./routes/current-user";
 
 const app = express();
 app.set('trust proxy', true);
@@ -20,6 +21,8 @@ app.use(
 
 app.use(signupRouter);
 app.use(signinRouter);
+app.use(currentUserRouter);
+
 app.use(errorHandler)
 
 export { app };
