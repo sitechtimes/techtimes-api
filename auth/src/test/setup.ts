@@ -39,13 +39,14 @@ afterAll(async () => {
 });
 
 global.signin = async () => {
+    const name = "Test"
     const email = "test@sitechhs.com";
     const password = "password";
 
     const response = await request(app)
         .post('/api/auth/signup')
         .send({
-            email, password
+            name, email, password
         })
         .expect(201);
 

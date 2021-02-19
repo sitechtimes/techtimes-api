@@ -3,6 +3,7 @@ import {Password} from "../services/password";
 import {Role} from "./role";
 
 interface UserAttrs {
+    name: string;
     email: string;
     password: string;
 }
@@ -21,7 +22,7 @@ interface UserDoc extends mongoose.Document {
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: false
+        required: true
     },
     email: {
         type: String,

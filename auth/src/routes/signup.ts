@@ -10,6 +10,8 @@ const router = express.Router();
 
 router.post('/api/auth/signup',
     [
+        body('name')
+            .notEmpty().withMessage("Name can't be empty"),
         body('email')
             .isEmail().withMessage('Email must be valid')
             .matches("^[\\w.+\\-]+@sitechhs\\.com$")
@@ -20,14 +22,14 @@ router.post('/api/auth/signup',
             .withMessage('Password must be between 8 and 16 characters')
     ], validateRequest, async (req: Request, res: Response) => {
 
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
         throw new BadRequestError('Email is in use');
     }
 
-    const user = User.build({ email, password });
+    const user = User.build({ name, email, password });
     await user.save();
 
     const userJWT = jwt.sign({
