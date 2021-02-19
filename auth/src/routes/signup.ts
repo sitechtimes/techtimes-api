@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/api/auth/signup',
     [
         body('email')
-            .isEmail().withMessage("Email must be valid")
+            .isEmail().withMessage('Email must be valid')
             .matches("^[\\w.+\\-]+@sitechhs\\.com$")
             .withMessage('Email must be a staten island tech email'),
         body('password')

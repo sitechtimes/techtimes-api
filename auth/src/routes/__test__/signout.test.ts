@@ -4,7 +4,7 @@ import {app} from "../../app";
 it('clear the cookie after signing out', async () => {
     await request(app).post('/api/auth/signout')
         .send({
-            email: 'test@sitechhs',
+            email: 'test@sitechhs.com',
             password: 'password'
         });
 
