@@ -39,7 +39,7 @@ afterAll(async () => {
 });
 
 global.signin = async () => {
-    const name = "Test"
+    const name = "Test Name"
     const email = "test@sitechhs.com";
     const password = "password";
 

@@ -13,7 +13,7 @@ it('returns a 400 when signin is attempted with an email does not exist', async 
 it('returns a 400 when signin is attempted with an incorrect password', async () => {
     await request(app).post('/api/auth/signup')
         .send({
-            name: "Test",
+            name: "Test Name",
             email: 'test@sitechhs.com',
             password: 'password'
         })
@@ -30,7 +30,7 @@ it('returns a 400 when signin is attempted with an incorrect password', async ()
 it('returns a cookie when valid credentials are given', async () => {
     await request(app).post('/api/auth/signup')
         .send({
-            name: "Test",
+            name: "Test Name",
             email: 'test@sitechhs.com',
             password: 'password'
         })
