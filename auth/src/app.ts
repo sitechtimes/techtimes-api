@@ -1,10 +1,10 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import 'express-async-errors'
 import { json } from 'body-parser';
 import helmet from 'helmet';
 import cookieSession from "cookie-session";
 
-import {errorHandler} from "./middlewares/error-handler";
+import {errorHandler, NotFoundError } from "@sitechtimes/shared";
 import {signupRouter} from "./routes/signup";
 import {signinRouter} from "./routes/signin";
 import {currentUserRouter} from "./routes/current-user";
@@ -19,7 +19,7 @@ app.use(helmet());
 app.use(
     cookieSession({
         signed: false, // jwt is already encrypted
-        secure: false
+        secure: false // TODO: has to be true before prod
     })
 );
 
@@ -27,6 +27,11 @@ app.use(signupRouter);
 app.use(signinRouter);
 app.use(currentUserRouter);
 app.use(signoutRouter);
+
+
+app.all('*', (req: Request, res: Response) => {
+    throw new NotFoundError();
+});
 
 app.use(errorHandler)
 
