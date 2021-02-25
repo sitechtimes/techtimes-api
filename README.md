@@ -1,4 +1,5 @@
 # techtimes-api
+Typescript-Express API powering the TechTimes website 🚀
 
 ## Setup 
 
