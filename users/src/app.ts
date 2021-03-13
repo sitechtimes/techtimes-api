@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import cookieSession from "cookie-session";
 
 import {errorHandler, NotFoundError } from "@sitechtimes/shared";
-import {router} from "./routes/users";
+import {createArticleRouter} from "./routes/new";
 
 const app = express();
 app.set('trust proxy', true);
@@ -16,11 +16,11 @@ app.use(helmet());
 app.use(
     cookieSession({
         signed: false, // jwt is already encrypted
-        secure: false // TODO: has to be true before prod
+        secure: false, // TODO: has to be true before prod
     })
 );
 
-app.use(router)
+app.use(createArticleRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

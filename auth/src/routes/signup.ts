@@ -40,7 +40,7 @@ router.post('/api/auth/signup',
         jwt: userJWT
     };
 
-    res.status(201).send(user)
+    res.status(201).send(user);
 });
 
 export { router as signupRouter } ;
