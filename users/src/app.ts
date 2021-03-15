@@ -4,7 +4,7 @@ import { json } from 'body-parser';
 import helmet from 'helmet';
 import cookieSession from "cookie-session";
 
-import {errorHandler, NotFoundError } from "@sitechtimes/shared";
+import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
 import {createArticleRouter} from "./routes/new";
 
 const app = express();
@@ -19,6 +19,8 @@ app.use(
         secure: false, // TODO: has to be true before prod
     })
 );
+
+app.use(currentUser)
 
 app.use(createArticleRouter);
 
