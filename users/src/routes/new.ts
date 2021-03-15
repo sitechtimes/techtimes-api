@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import {validateRequest} from "@sitechtimes/shared";
+import {NotAuthorizedError, validateRequest} from "@sitechtimes/shared";
 import {requireAuth} from "@sitechtimes/shared";
 
 const router = express.Router();
@@ -13,9 +13,6 @@ router.post('/api/users', requireAuth, [
 ], validateRequest, async (req: Request, res: Response) => {
 
     const { title, content } = req.body;
-
-    // const article = Article.build({ title, content });
-    // await a.save();
 
     res.status(201).send({});
 });

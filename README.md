@@ -13,3 +13,8 @@ git clone https://github.com/sitechtimes/techtimes-api
 JWT_KEY=[INSERT DEV JWT_KEY HERE]
 MONGO_URI=[INSERT DEV MONGO DB HERE]
 ```
+
+3. Create secret from dotenv flie
+```shell script
+kubectl create secret generic my-env-list --from-env-file=[INSERT ENV FILE PATH]
+```
