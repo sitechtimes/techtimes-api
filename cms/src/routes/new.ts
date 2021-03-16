@@ -5,7 +5,7 @@ import {requireAuth} from "@sitechtimes/shared";
 
 const router = express.Router();
 
-router.post('/api/users', requireAuth, [
+router.post('/api/cms', requireAuth, [
     body('title')
         .notEmpty().withMessage('Title is required'),
     body('content')

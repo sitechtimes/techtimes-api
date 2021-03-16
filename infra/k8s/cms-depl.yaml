@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-depl
+  name: cms-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: cms
   template:
     metadata:
       labels:
-        app: users
+        app: cms
     spec:
       containers:
-        - name: users
-          image: sitechtimes/users
+        - name: cms
+          image: sitechtimes/cms
           envFrom:
             - secretRef:
                 name: secrets
@@ -22,12 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-srv
+  name: cms-srv
 spec:
   selector:
-    app: users
+    app: cms
   ports:
-    - name: users
+    - name: cms
       protocol: TCP
       port: 3000
       targetPort: 3000

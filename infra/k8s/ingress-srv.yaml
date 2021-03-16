@@ -14,7 +14,7 @@ spec:
             backend:
               serviceName: auth-srv
               servicePort: 3000
-          - path: /api/users/?(.*)
+          - path: /api/cms/?(.*)
             backend:
-              serviceName: users-srv
+              serviceName: cms-srv
               servicePort: 3000
