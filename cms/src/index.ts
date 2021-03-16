@@ -1,8 +1,5 @@
 import { app } from "./app";
 import mongoose from 'mongoose';
-import env from 'dotenv';
-
-env.config({ path: `${__dirname}/../../.env.development`});
 
 const start = async  () => {
     if (!process.env.JWT_KEY){

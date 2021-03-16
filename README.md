@@ -16,5 +16,5 @@ MONGO_URI=[INSERT DEV MONGO DB HERE]
 
 3. Create secret from dotenv flie
 ```shell script
-kubectl create secret generic my-env-list --from-env-file=[INSERT ENV FILE PATH]
+kubectl create secret generic secrets --from-env-file=[INSERT ENV FILE PATH]
 ```
