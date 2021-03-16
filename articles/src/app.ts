@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import cookieSession from "cookie-session";
 
 import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
-import {sampleArticleRouter} from "./routes/sample";
+import {sampleArticleRouter} from "./routes/articles";
 
 const app = express();
 app.set('trust proxy', true);
