@@ -18,3 +18,7 @@ spec:
             backend:
               serviceName: cms-srv
               servicePort: 3000
+          - path: /api/articles/?(.*)
+            backend:
+              serviceName: articles-srv
+              servicePort: 3000
