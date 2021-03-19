@@ -4,6 +4,8 @@ import queryscript from 'queryscript';
 import { app } from '../app';
 import { check } from 'express-validator';
 
+import { Article } from "../models/article-temp";
+
 const router = express.Router();
 //app.use(queryscript);
 
@@ -13,6 +15,8 @@ router.get('/api/articles', async (req: Request, res: Response) => {
     let query = "";
     let page = 0;
 
+    let filter = {title: 'polo'};
+    let Result = await Article.find();
     if(req.query.topic !== undefined) { topic = String(req.query.topic); }
     if(req.query.query !== undefined) { query = String(req.query.query); }
 
@@ -25,7 +29,7 @@ router.get('/api/articles', async (req: Request, res: Response) => {
     else{ throw new BadRequestError('This is not a valid page');}
 
 
-    res.status(200).send([topic, limit, query, page]);
+    res.status(200).send([[topic, limit, query, page], Result]);
 });
 
 

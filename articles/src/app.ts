@@ -6,6 +6,8 @@ import cookieSession from "cookie-session";
 
 import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
 import {sampleArticleRouter} from "./routes/articles";
+//temperorary
+import {createArticleRouter} from "./routes/new-temp";
 
 const app = express();
 app.set('trust proxy', true);
@@ -21,13 +23,14 @@ app.use(
 );
 
 app.use(sampleArticleRouter);
+app.use(createArticleRouter);
 
-app.use(currentUser)
+app.use(currentUser);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();
 });
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 export { app };
