@@ -9,14 +9,14 @@ import { Article } from "../models/article-temp";
 const router = express.Router();
 //app.use(queryscript);
 
+
 router.get('/api/articles', async (req: Request, res: Response) => {
     let topic = "";
     let limit = 20;
     let query = "";
     let page = 0;
 
-    let filter = {title: 'polo'};
-    let Result = await Article.find();
+    //let Result = await User.find({ role: /writer/ }, null, { skip: 0 }).exec();
     if(req.query.topic !== undefined) { topic = String(req.query.topic); }
     if(req.query.query !== undefined) { query = String(req.query.query); }
 
@@ -28,8 +28,11 @@ router.get('/api/articles', async (req: Request, res: Response) => {
     else if(Number(req.query.page) > -1) {  page = Number(req.query.page);}
     else{ throw new BadRequestError('This is not a valid page');}
 
+    let qe = new RegExp(`\\b${query}\\b`, 'gi');
+    let top = new RegExp(`\\b${topic}\\b`, 'gi');
 
-    res.status(200).send([[topic, limit, query, page], Result]);
+    let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*10}).limit(limit).exec();
+    res.status(200).send([[topic, limit, query, page], Articles]);
 });
 
 
