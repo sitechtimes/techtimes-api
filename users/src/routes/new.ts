@@ -1,20 +1,18 @@
 import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
-import {NotAuthorizedError, validateRequest} from "@sitechtimes/shared";
+import {NotFoundError} from "@sitechtimes/shared";
 import {requireAuth} from "@sitechtimes/shared";
+import {User} from "../models/user";
 
-const router = express.Router();
+const router =express.Router();
 
-router.post('/api/cms', requireAuth, [
-    body('title')
-        .notEmpty().withMessage('Title is required'),
-    body('content')
-        .notEmpty().withMessage('Content is required'),
-], validateRequest, async (req: Request, res: Response) => {
+router.get('/api/users/:id', requireAuth, async (req: Request, res: Response) => {
+    const user = await User.findById(req.params.id);
 
-    const { title, content } = req.body;
+    if (!user){
+        throw new NotFoundError();
+    }
 
-    res.status(201).send({});
+    res.send(user);
 });
 
 

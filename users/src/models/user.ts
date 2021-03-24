@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
         type: Role,
         default: Role.Writer,
         required: true
+    },
+    unknown: {
+        type: String,
+        required: true
     }
 }, {
     toJSON:{
