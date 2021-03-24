@@ -16,8 +16,8 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: sitechtimes/cms
-      context: cms
+    - image: sitechtimes/users
+      context: users
       docker:
         dockerfile: Dockerfile
       sync:
