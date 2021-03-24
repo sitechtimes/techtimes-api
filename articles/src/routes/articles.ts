@@ -32,6 +32,7 @@ router.get('/api/articles', async (req: Request, res: Response) => {
     let top = new RegExp(`\\b${topic}\\b`, 'gi');
 
     let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*10}).limit(limit).exec();
+    
     res.status(200).send([[topic, limit, query, page], Articles]);
 });
 
