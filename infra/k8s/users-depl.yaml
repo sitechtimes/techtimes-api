@@ -6,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app:users
+      app: users
   template:
     metadata:
       labels:
-        app:users
+        app: users
     spec:
       containers:
-        - name:users
+        - name: users
           image: sitechtimes/users
           envFrom:
             - secretRef:
@@ -25,9 +25,9 @@ metadata:
   name: users-srv
 spec:
   selector:
-    app:users
+    app: users
   ports:
-    - name:users
+    - name: users
       protocol: TCP
       port: 3000
       targetPort: 3000
