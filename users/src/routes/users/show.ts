@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import {NotFoundError} from "@sitechtimes/shared";
 import {requireAuth} from "@sitechtimes/shared";
-import {User} from "../models/user";
+import {User} from "../../models/user";
 
-const router =express.Router();
+const router = express.Router();
 
 router.get('/api/users/:id', requireAuth, async (req: Request, res: Response) => {
     const user = await User.findById(req.params.id);
@@ -15,6 +15,4 @@ router.get('/api/users/:id', requireAuth, async (req: Request, res: Response) =>
     res.send(user);
 });
 
-
-
-export { router as createArticleRouter }
+export { router as showUserRouter }

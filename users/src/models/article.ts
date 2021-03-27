@@ -9,7 +9,7 @@ interface ArticleModel extends mongoose.Model<ArticleDoc> {
     build(attrs: ArticleAttrs): ArticleDoc;
 }
 
-interface ArticleDoc extends mongoose.Document {
+export interface ArticleDoc extends mongoose.Document {
     title: string;
     content: string;
 }
@@ -43,4 +43,4 @@ articleSchema.statics.build = (attrs: ArticleAttrs) => {
 
 const Article = mongoose.model<ArticleDoc, ArticleModel>('Article', articleSchema);
 
-export { Article };
+export { articleSchema, Article };

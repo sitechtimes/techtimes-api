@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
-
-// TODO: add to shared package
-export enum Role {
-    Writer = 'writer',
-    Editor = 'editor',
-    Admin = 'admin'
-}
+import {Role} from "./role";
+import {Article, ArticleDoc, articleSchema} from "./article";
 
 interface UserAttrs {
     name: string;
@@ -22,6 +17,7 @@ interface UserDoc extends mongoose.Document {
     email: string;
     password: string;
     role: Role;
+    articles: [ArticleDoc];
 }
 
 const userSchema = new mongoose.Schema({
@@ -42,9 +38,9 @@ const userSchema = new mongoose.Schema({
         default: Role.Writer,
         required: true
     },
-    unknown: {
-        type: String,
-        required: true
+    articles: {
+        type: [articleSchema],
+        required: true,
     }
 }, {
     toJSON:{

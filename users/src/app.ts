@@ -5,7 +5,11 @@ import helmet from 'helmet';
 import cookieSession from "cookie-session";
 
 import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
-import {createArticleRouter} from "./routes/new";
+import {showUserRouter} from "./routes/users/show";
+import {usersRouter} from "./routes/users";
+import {deleteUserRouter} from "./routes/users/delete";
+import {showArticlesRouter} from "./routes/articles";
+import {createArticleRouter} from "./routes/articles/new";
 
 const app = express();
 app.set('trust proxy', true);
@@ -20,8 +24,13 @@ app.use(
     })
 );
 
-app.use(currentUser)
+app.use(currentUser);
 
+app.use(usersRouter);
+app.use(showUserRouter);
+app.use(deleteUserRouter);
+
+app.use(showArticlesRouter);
 app.use(createArticleRouter);
 
 app.all('*', (req: Request, res: Response) => {
