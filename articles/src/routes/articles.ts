@@ -16,7 +16,6 @@ router.get('/api/articles', async (req: Request, res: Response) => {
     let query = "";
     let page = 0;
 
-    //let Result = await User.find({ role: /writer/ }, null, { skip: 0 }).exec();
     if(req.query.topic !== undefined) { topic = String(req.query.topic); }
     if(req.query.query !== undefined) { query = String(req.query.query); }
 
@@ -31,8 +30,9 @@ router.get('/api/articles', async (req: Request, res: Response) => {
     let qe = new RegExp(`\\b${query}\\b`, 'gi');
     let top = new RegExp(`\\b${topic}\\b`, 'gi');
 
-    let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*10}).limit(limit).exec();
-    
+    let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*limit}).limit(limit).exec();
+
+
     res.status(200).send([[topic, limit, query, page], Articles]);
 });
 
