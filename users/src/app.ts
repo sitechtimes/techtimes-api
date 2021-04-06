@@ -10,6 +10,7 @@ import {usersRouter} from "./routes/users";
 import {deleteUserRouter} from "./routes/users/delete";
 import {showArticlesRouter} from "./routes/articles";
 import {createArticleRouter} from "./routes/articles/new";
+import {updateArticleRouter} from "./routes/articles/update";
 
 const app = express();
 app.set('trust proxy', true);
@@ -32,6 +33,7 @@ app.use(deleteUserRouter);
 
 app.use(showArticlesRouter);
 app.use(createArticleRouter);
+app.use(updateArticleRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

@@ -31,16 +31,19 @@ router.post('/api/auth/signup',
     const user = User.build({ name, email, password });
     await user.save();
 
-    const userJWT = jwt.sign({
+    const payload = {
         id: user.id,
-        email: user.email
-    }, process.env.JWT_KEY!, { expiresIn: '6h' });
+        email: user.email,
+        role: user.role
+    };
+
+    const userJWT = jwt.sign(payload, process.env.JWT_KEY!, { expiresIn: '6h' });
 
     req.session = {
         jwt: userJWT
     };
 
-    res.status(201).send(user);
+    res.status(201).send({ ...payload, "token": userJWT });
 });
 
 export { router as signupRouter } ;

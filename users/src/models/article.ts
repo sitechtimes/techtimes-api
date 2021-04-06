@@ -28,6 +28,7 @@ const articleSchema = new mongoose.Schema({
         required: true
     }
 }, {
+    timestamps: true,
     toJSON: {
         transform(doc, ret) {
             ret.id = ret._id;
