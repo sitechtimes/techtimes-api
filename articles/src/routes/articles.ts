@@ -15,7 +15,7 @@ router.get('/api/articles', async (req: Request, res: Response) => {
     let limit = 20;
     let query = "";
     let page = 0;
-
+    
     if(req.query.topic !== undefined) { topic = String(req.query.topic); }
     if(req.query.query !== undefined) { query = String(req.query.query); }
 
@@ -29,6 +29,17 @@ router.get('/api/articles', async (req: Request, res: Response) => {
 
     let qe = new RegExp(`\\b${query}\\b`, 'gi');
     let top = new RegExp(`\\b${topic}\\b`, 'gi');
+
+    if (req.query.method === undefined) {  let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*limit, sort: {title: 1}}).limit(limit).exec(); }
+    else if(req.query.method === "alphasc") { //Sorting alphabet ascending (A-Z)
+        let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*limit, sort: {title: 1}}).limit(limit).exec();
+    }
+    else if(req.query.method === "alphdesc") { //Sorting alphabet descending (Z-A)
+        let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*limit, sort: {title: -1}}).limit(limit).exec();
+    }
+    else {
+        let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*limit, sort: {title: 1}}).limit(limit).exec();
+    }
 
     let Articles = await Article.find({ content: qe , topic: top }, null, { skip: page*limit}).limit(limit).exec();
 
