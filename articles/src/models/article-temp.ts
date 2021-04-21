@@ -1,3 +1,4 @@
+  
 import mongoose from 'mongoose';
 
 interface ArticleAttrs {
@@ -9,7 +10,7 @@ interface ArticleModel extends mongoose.Model<ArticleDoc> {
     build(attrs: ArticleAttrs): ArticleDoc;
 }
 
-interface ArticleDoc extends mongoose.Document {
+export interface ArticleDoc extends mongoose.Document {
     title: string;
     content: string;
 }
@@ -19,11 +20,16 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    imageUrl: {
+        type: String,
+        required: false
+    },
     content: {
         type: String,
         required: true
     }
 }, {
+    timestamps: true,
     toJSON: {
         transform(doc, ret) {
             ret.id = ret._id;
@@ -39,4 +45,4 @@ articleSchema.statics.build = (attrs: ArticleAttrs) => {
 
 const Article = mongoose.model<ArticleDoc, ArticleModel>('Article', articleSchema);
 
-export { Article };
+export { articleSchema, Article };
