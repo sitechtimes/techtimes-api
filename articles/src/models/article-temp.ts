@@ -1,4 +1,4 @@
-  
+//Copied from the User model because I was having WAY too much trouble linking to it... and also it's bad design to reference another service in a microservice. I'll check with the Group LEader later for a better solution
 import mongoose from 'mongoose';
 
 interface ArticleAttrs {
