@@ -16,4 +16,4 @@ router.get('/api/users/:id/articles', requireAuth, async (req: Request, res: Res
     res.send(articles);
 });
 
-export { router as showArticlesRouter }
+export { router as showArticlesRouter };

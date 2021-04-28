@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {ArticleStatus} from "./articleStatus";
 
 interface ArticleAttrs {
     title: string;
@@ -12,6 +13,7 @@ interface ArticleModel extends mongoose.Model<ArticleDoc> {
 export interface ArticleDoc extends mongoose.Document {
     title: string;
     content: string;
+    status: ArticleStatus;
 }
 
 const articleSchema = new mongoose.Schema({
@@ -22,6 +24,11 @@ const articleSchema = new mongoose.Schema({
     imageUrl: {
         type: String,
         required: false
+    },
+    status: {
+        type: ArticleStatus,
+        required: true,
+        default: ArticleStatus.Draft
     },
     content: {
         type: String,
