@@ -1,34 +1,20 @@
 import express, {Request, Response} from "express";
-import {User} from "../../../users/src/models/user";
-import {Article} from "../../../users/src/models/article";
-import {NotFoundError, requireAuth} from "@sitechtimes/shared";
+import {Draft} from "../models/draft";
+import {requireAuth} from "@sitechtimes/shared";
 
 const router = express.Router();
 
-router.post('/api/users/:id/articles', requireAuth,
-    async (req: Request, res: Response) => {
+router.post('/api/cms/', requireAuth, async (req: Request, res: Response) => {
 
-    const user = await User.findById(req.params.id);
-
-    if (!user) {
-        throw new NotFoundError();
-    }
-
-   const article = Article.build({
+   const draft = Draft.build({
        title: 'Untitled',
-       content: 'This is where you should write the content of your article ...'
+       content: 'This is where you should write the content of your article ...',
+       userId: req.currentUser!.id
     });
 
-    user!.articles.push(article);
+   await draft.save()
 
-    await user!.save();
-
-    // TODO: refactor: this is done to get the timestamps of the mongo object
-    const createdArticle = user!.articles.find(userArticles => {
-        return userArticles.id === article.id;
-    });
-
-    res.send(createdArticle);
+   res.status(201).send(draft);
 });
 
-export { router as createArticleRouter };
+export { router as createDraftRouter };

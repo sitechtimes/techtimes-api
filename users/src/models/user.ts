@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import {Role} from "./role";
-import {Article, ArticleDoc, articleSchema} from "./article";
 
 interface UserAttrs {
     name: string;
@@ -17,7 +16,6 @@ interface UserDoc extends mongoose.Document {
     email: string;
     password: string;
     role: Role;
-    articles: [ArticleDoc];
 }
 
 const userSchema = new mongoose.Schema({
@@ -38,10 +36,6 @@ const userSchema = new mongoose.Schema({
         default: Role.Writer,
         required: true
     },
-    articles: {
-        type: [articleSchema],
-        required: true,
-    }
 }, {
     toJSON:{
         transform(doc, ret){

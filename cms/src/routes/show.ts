@@ -1,30 +1,19 @@
 import express, { Request, Response } from 'express';
-import {User} from "../../../users/src/models/user";
 import {NotFoundError, requireAuth} from "@sitechtimes/shared";
+import {Draft} from "../models/draft";
 
 const router = express.Router();
 
-// TODO : add requireAuth middleware
-// requireAuth unless editor or admin
-router.get('/api/users/:id/articles/:article_id', async (req: Request, res: Response) => {
+// TODO : add admin, editor, and writer of draft access only middleware
+router.get('/api/cms/:id', requireAuth, async (req: Request, res: Response) => {
 
-    const user = await User.findById(req.params.id);
+    const draft = await Draft.findById(req.params.id);
 
-    if (!user){
+    if (!draft) {
         throw new NotFoundError();
     }
 
-    const userArticles = user!.articles
-
-    const article = userArticles.find(article => {
-        return article.id === req.params.article_id;
-    });
-
-    if (!article){
-        throw new NotFoundError();
-    }
-
-    res.send(article);
+    res.send(draft)
 });
 
-export { router as showArticleRouter }
+export { router as showDraftRouter }

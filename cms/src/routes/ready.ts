@@ -1,36 +1,19 @@
-import express, { Request, Response } from 'express';
-import {User} from "../../../users/src/models/user";
-import {requireAuth, validateRequest} from "@sitechtimes/shared";
-import {Role} from "../../../users/src/models/role";
-import {ArticleStatus} from "../../../users/src/models/articleStatus";
-import {ArticleDoc} from "../../../users/src/models/article";
+import express, {Request, Response} from "express";
+import {requireAuth} from "@sitechtimes/shared";
+import {Draft} from "../models/draft";
+import {Role} from "../models/role";
+import {ArticleStatus} from "../models/articleStatus";
 
 const router = express.Router();
 
-router.get('/api/users/articles/ready',
-    validateRequest, requireAuth, async (req: Request, res: Response) => {
+router.get('/api/cms/ready/', requireAuth, async (req: Request, res: Response) => {
+    let drafts = {};
 
-    // TODO: create middleware for admin, editor, writer check
-    if (req.currentUser!.role == Role.Admin){
-
-        const users = await User.find({});
-
-        let articles: Array<ArticleDoc> = [];
-
-        users.forEach(user => {
-            user.articles.forEach(article => {
-                if (article.status == ArticleStatus.Ready) {
-                    articles.push(article);
-                }
-            });
-        });
-
-        res.send({ 'articles': articles });
-
-    }else{
-        res.send({});
+    if (req.currentUser!.role == Role.Admin) {
+        drafts = await Draft.find({ status: ArticleStatus.Ready });
     }
 
+    res.send(drafts)
 });
 
-export { router as readyArticlesRouter };
+export { router as readyDraftsRouter };

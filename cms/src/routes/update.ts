@@ -1,50 +1,38 @@
 import express, { Request, Response } from 'express';
-import {User} from "../../../users/src/models/user";
-import {NotFoundError, requireAuth, validateRequest} from "@sitechtimes/shared";
-import {Role} from "../../../users/src/models/role";
-import {ArticleStatus} from "../../../users/src/models/articleStatus";
+import {NotFoundError, requireAuth} from "@sitechtimes/shared";
+import {Role} from "../models/role";
+import {ArticleStatus} from "../models/articleStatus";
+import {Draft} from "../models/draft";
 
 const router = express.Router();
 
-router.put('/api/users/:id/articles/:article_id',
-    validateRequest, requireAuth, async (req: Request, res: Response) => {
-    const user = await User.findById(req.params.id);
+router.put('/api/cms/:id/', requireAuth, async (req: Request, res: Response) => {
+    const draft = await Draft.findById(req.params.id);
 
-    if (!user){
+    if (!draft){
         throw new NotFoundError();
     }
 
-    const userArticles = user!.articles
+    // draft - for writer
+    // TODO - refactor update logic
+    if (draft.userId == req.currentUser!.id) {
+        const title = req.body.title == undefined ? draft.title : req.body.title
+        const content = req.body.content == undefined ? draft.content : req.body.content
+        const status = req.body.status == ArticleStatus.Review ? req.body.status : draft.status
 
-    const article = userArticles.find(article => {
-        return article.id === req.params.article_id;
-    });
-
-    if (!article){
-        throw new NotFoundError();
+        draft.set({ title, content, status });
     }
 
-    // TODO: major refactor with checks - add more error handling
-    if (user.role == Role.Writer && article.status == 'draft') {
-
-        const title = req.body.title == undefined ? article.title : req.body.title
-        const content = req.body.content == undefined ? article.content : req.body.content
-        const status = req.body.status == ArticleStatus.Review ? req.body.status : article.status
-
-        article.set({ title, content, status });
-    }
-
-    // editor - can move to ready and back to draft
-    if (user!.role == Role.Editor && article.status == 'review') {
+    // // editor - can move to ready and back to draft
+    if (req.currentUser!.role == Role.Editor && draft.status == 'review') {
         if (req.body.status == ArticleStatus.Ready || ArticleStatus.Draft) {
-            article.set({
+            draft.set({
                 status: req.body.status
             });
         }
     }
 
     // admin
-    //
     // if (user!.role == Role.Editor) {
     //     if (req.body.status == ArticleStatus.Draft) {
     //         article.set({
@@ -53,10 +41,9 @@ router.put('/api/users/:id/articles/:article_id',
     //     }
     // }
 
-    await user.save();
+    await draft.save();
 
-    // TODO: send article back to user
-    res.sendStatus(204);
+    res.send(draft);
 });
 
-export { router as updateArticleRouter }
+export { router as updateDraftRouter };

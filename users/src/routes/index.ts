@@ -12,7 +12,6 @@ router.get('/api/users/', async (req: Request, res: Response) => {
         throw new NotAuthorizedError();
     }
 
-    // TODO: shouldn't include articles just users
     const users = await User.find({ role: { $ne: Role.Admin }});
 
     res.send(users);

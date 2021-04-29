@@ -1,22 +1,24 @@
 import mongoose from 'mongoose';
 import {ArticleStatus} from "./articleStatus";
 
-interface ArticleAttrs {
+interface DraftAttrs {
     title: string;
     content: string;
+    userId: string;
 }
 
-interface ArticleModel extends mongoose.Model<ArticleDoc> {
-    build(attrs: ArticleAttrs): ArticleDoc;
+interface DraftModel extends mongoose.Model<DraftDoc> {
+    build(attrs: DraftAttrs): DraftDoc;
 }
 
-export interface ArticleDoc extends mongoose.Document {
+export interface DraftDoc extends mongoose.Document {
     title: string;
     content: string;
+    userId: string;
     status: ArticleStatus;
 }
 
-const articleSchema = new mongoose.Schema({
+const draftSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -33,6 +35,10 @@ const articleSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true
+    },
+    userId: {
+       type: String,
+        required: true
     }
 }, {
     timestamps: true,
@@ -45,10 +51,10 @@ const articleSchema = new mongoose.Schema({
     }
 });
 
-articleSchema.statics.build = (attrs: ArticleAttrs) => {
-    return new Article(attrs);
+draftSchema.statics.build = (attrs: DraftAttrs) => {
+    return new Draft(attrs);
 };
 
-const Article = mongoose.model<ArticleDoc, ArticleModel>('Article', articleSchema);
+const Draft = mongoose.model<DraftDoc, DraftModel>('Draft', draftSchema);
 
-export { articleSchema, Article };
+export { draftSchema, Draft };

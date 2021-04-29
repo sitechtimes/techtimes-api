@@ -1,19 +1,13 @@
 import express, { Request, Response } from 'express';
-import {User} from "../../../users/src/models/user";
-import {NotFoundError, requireAuth} from "@sitechtimes/shared";
+import {requireAuth} from "@sitechtimes/shared";
+import {Draft} from "../models/draft";
 
 const router = express.Router();
 
-router.get('/api/users/:id/articles', requireAuth, async (req: Request, res: Response) => {
-    const user = await User.findById(req.params.id);
+router.get('/api/cms/', requireAuth, async (req: Request, res: Response) => {
+    const drafts = await Draft.find({ userId: req.currentUser!.id });
 
-    if (!user){
-        throw new NotFoundError();
-    }
-
-    const articles = user!.articles;
-
-    res.send(articles);
+    res.send(drafts);
 });
 
-export { router as showArticlesRouter };
+export { router as indexDraftRouter };
