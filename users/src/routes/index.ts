@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import {NotAuthorizedError} from "@sitechtimes/shared";
-import {Role} from "../../models/role";
-import {User} from "../../models/user";
+import {Role} from "../models/role";
+import {User} from "../models/user";
 
 const router =express.Router();
 

@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
-import {User} from "../../models/user";
+import {User} from "../../../users/src/models/user";
 import {requireAuth, validateRequest} from "@sitechtimes/shared";
-import {Role} from "../../models/role";
-import {ArticleStatus} from "../../models/articleStatus";
-import {ArticleDoc} from "../../models/article";
+import {Role} from "../../../users/src/models/role";
+import {ArticleStatus} from "../../../users/src/models/articleStatus";
+import {ArticleDoc} from "../../../users/src/models/article";
 
 const router = express.Router();
 

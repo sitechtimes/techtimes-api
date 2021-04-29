@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
-import {User} from "../../models/user";
+import {User} from "../../../users/src/models/user";
 import {NotFoundError, requireAuth, validateRequest} from "@sitechtimes/shared";
-import {Role} from "../../models/role";
-import {ArticleStatus} from "../../models/articleStatus";
+import {Role} from "../../../users/src/models/role";
+import {ArticleStatus} from "../../../users/src/models/articleStatus";
 
 const router = express.Router();
 

@@ -18,6 +18,10 @@ spec:
             backend:
               serviceName: users-srv
               servicePort: 3000
+          - path: /api/cms/?(.*)
+            backend:
+              serviceName: users-srv
+              servicePort: 3000
           - path: /api/articles/?(.*)
             backend:
               serviceName: articles-srv

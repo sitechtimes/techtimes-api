@@ -6,9 +6,12 @@ import cookieSession from "cookie-session";
 import cors from 'cors';
 
 import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
-import {showUserRouter} from "./routes/show";
-import {usersRouter} from "./routes";
-import {deleteUserRouter} from "./routes/delete";
+import {showArticlesRouter} from "./routes";
+import {createArticleRouter} from "./routes/new";
+import {updateArticleRouter} from "./routes/update";
+import {showArticleRouter} from "./routes/show";
+import {reviewArticlesRouter} from "./routes/review";
+import {readyArticlesRouter} from "./routes/ready";
 
 const app = express();
 app.set('trust proxy', true);
@@ -25,9 +28,12 @@ app.use(
 
 app.use(currentUser);
 
-app.use(usersRouter);
-app.use(showUserRouter);
-app.use(deleteUserRouter);
+// app.use(showArticlesRouter);
+// app.use(createArticleRouter);
+// app.use(showArticleRouter);
+// app.use(updateArticleRouter);
+// app.use(reviewArticlesRouter);
+// app.use(readyArticlesRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

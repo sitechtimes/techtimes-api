@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
-import {User} from "../../models/user";
-import {Article} from "../../models/article";
+import {User} from "../../../users/src/models/user";
+import {Article} from "../../../users/src/models/article";
 import {NotFoundError, requireAuth} from "@sitechtimes/shared";
 
 const router = express.Router();
