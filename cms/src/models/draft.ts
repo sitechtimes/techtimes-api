@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {ArticleStatus} from "./articleStatus";
+import {DraftStatus} from "./draftStatus";
 
 interface DraftAttrs {
     title: string;
@@ -15,7 +15,7 @@ export interface DraftDoc extends mongoose.Document {
     title: string;
     content: string;
     userId: string;
-    status: ArticleStatus;
+    status: DraftStatus;
 }
 
 const draftSchema = new mongoose.Schema({
@@ -28,9 +28,9 @@ const draftSchema = new mongoose.Schema({
         required: false
     },
     status: {
-        type: ArticleStatus,
+        type: DraftStatus,
         required: true,
-        default: ArticleStatus.Draft
+        default: DraftStatus.Draft
     },
     content: {
         type: String,

@@ -12,6 +12,7 @@ import {indexDraftRouter} from "./routes";
 import {updateDraftRouter} from "./routes/update";
 import {readyDraftsRouter} from "./routes/ready";
 import {reviewDraftsRouter} from "./routes/review";
+import {deleteDraftRouter} from "./routes/delete";
 
 const app = express();
 app.set('trust proxy', true);
@@ -34,6 +35,7 @@ app.use(indexDraftRouter);
 app.use(createDraftRouter);
 app.use(showDraftRouter);
 app.use(updateDraftRouter);
+app.use(deleteDraftRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

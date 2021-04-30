@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import {NotFoundError, requireAuth} from "@sitechtimes/shared";
+import {NotAuthorizedError, NotFoundError, requireAuth} from "@sitechtimes/shared";
 import {Draft} from "../models/draft";
 
 const router = express.Router();
@@ -13,7 +13,11 @@ router.get('/api/cms/:id', requireAuth, async (req: Request, res: Response) => {
         throw new NotFoundError();
     }
 
-    res.send(draft)
+    if (draft.userId !== req.currentUser!.id) {
+        throw new NotAuthorizedError();
+    }
+
+    res.send(draft);
 });
 
 export { router as showDraftRouter }

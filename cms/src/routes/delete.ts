@@ -14,4 +14,4 @@ router.delete('/api/cms/:id/', requireAuth, async (req: Request, res: Response) 
     res.status(204);
 });
 
-export { router as indexDraftRouter };
+export { router as deleteDraftRouter };
