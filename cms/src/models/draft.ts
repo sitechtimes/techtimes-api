@@ -15,6 +15,7 @@ export interface DraftDoc extends mongoose.Document {
     title: string;
     content: string;
     userId: string;
+    imageUrl: string;
     status: DraftStatus;
 }
 
@@ -25,6 +26,7 @@ const draftSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String,
+        default: null,
         required: false
     },
     status: {

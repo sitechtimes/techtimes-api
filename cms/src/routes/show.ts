@@ -13,9 +13,9 @@ router.get('/api/cms/:id', requireAuth, async (req: Request, res: Response) => {
         throw new NotFoundError();
     }
 
-    if (draft.userId !== req.currentUser!.id) {
-        throw new NotAuthorizedError();
-    }
+    // if (draft.userId !== req.currentUser!.id) {
+    //     throw new NotAuthorizedError();
+    // }
 
     res.send(draft);
 });
