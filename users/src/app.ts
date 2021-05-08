@@ -9,6 +9,7 @@ import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
 import {showUserRouter} from "./routes/show";
 import {usersRouter} from "./routes";
 import {deleteUserRouter} from "./routes/delete";
+import {updateUserRouter} from "./routes/update";
 
 const app = express();
 app.set('trust proxy', true);
@@ -28,6 +29,7 @@ app.use(currentUser);
 app.use(usersRouter);
 app.use(showUserRouter);
 app.use(deleteUserRouter);
+app.use(updateUserRouter)
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

@@ -13,13 +13,13 @@ router.put('/api/cms/:id/', requireAuth, async (req: Request, res: Response) => 
         throw new NotFoundError();
     }
 
-    // if (draft.userId !== req.currentUser!.id) {
-    //     throw new NotAuthorizedError();
-    // }
+    if (draft.userId !== req.currentUser!.id && req.currentUser!.role === Role.Writer ) {
+        throw new NotAuthorizedError();
+    }
 
     // draft - for writer
-    // TODO - refactor update logic
     if (draft.userId == req.currentUser!.id) {
+        // TODO - refactor update logic
         const title = req.body.title == undefined ? draft.title : req.body.title
         const content = req.body.content == undefined ? draft.content : req.body.content
         const status = req.body.status == DraftStatus.Review ? req.body.status : draft.status
