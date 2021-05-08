@@ -37,19 +37,6 @@ router.post('/api/auth/signup',
 
     res.status(201).send(user.toJSON());
 
-    // const payload = {
-    //     id: user.id,
-    //     email: user.email,
-    //     role: user.role
-    // };
-    //
-    // const userJWT = jwt.sign(payload, process.env.JWT_KEY!, { expiresIn: '6h' });
-    //
-    // req.session = {
-    //     jwt: userJWT
-    // };
-    //
-    // res.status(201).send({ ...payload, "token": userJWT });
 });
 
 export { router as signupRouter } ;
