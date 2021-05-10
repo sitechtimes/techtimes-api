@@ -24,8 +24,9 @@ router.put('/api/cms/:id/', requireAuth, async (req: Request, res: Response) => 
         const content = req.body.content == undefined ? draft.content : req.body.content
         const status = req.body.status == DraftStatus.Review ? req.body.status : draft.status
         const imageUrl = req.body.imageUrl == undefined ? draft.imageUrl : req.body.imageUrl
+        const category = req.body.category == undefined ? draft.category : req.body.category
 
-        draft.set({ title, content, status, imageUrl });
+        draft.set({ title, content, status, imageUrl, category });
     }
 
     // editor - can move to ready and back to draft

@@ -2,37 +2,40 @@ import express, { Request, Response } from 'express';
 import {NotFoundError, requireAuth} from "@sitechtimes/shared";
 import {Draft} from "../models/draft";
 import {Article} from "../models/article";
-// import {User} from "../../../users/src/models/user";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
-// TODO: build out the publish route
-router.get('/api/cms/:id/publish', requireAuth, async (req: Request, res: Response) => {
+router.post('/api/cms/:id/publish', requireAuth, async (req: Request, res: Response) => {
+    console.log("hello")
+
     const draft = await Draft.findById(req.params.id);
 
     if (!draft){
        throw new NotFoundError();
     }
 
-    // const draftUser = await User.findById(draft.userId);
-    //
-    // if (!draftUser){
-    //     throw new NotFoundError();
-    // }
-    //
+    const db = mongoose.connection.db.collection('users')
 
-    // const article = Article.build({
-    //     title: draft.title,
-    //     content: draft.content,
-    //     imageUrl: draft.imageUrl,
-    //     user: {
-    //         id: draft.userId,
-    //         name: draftUser.name,
-    //         imageUrl: draftUser.imageUrl
-    //     }
-    // })
+    const users = await db.find({_id: mongoose.Types.ObjectId(draft.userId)}).toArray();
 
-    // await article.save()
+    if (!users[0]){
+        throw new NotFoundError();
+    }
+
+    const article = Article.build({
+        title: draft.title,
+        content: draft.content,
+        imageUrl: draft.imageUrl,
+        user: {
+            id: draft.userId,
+            name: users[0].name,
+            imageUrl: users[0].imageUrl
+        }
+    });
+
+    await article.save();
+    await Draft.findByIdAndDelete(req.params.id);
 
     res.sendStatus(200);
 });
