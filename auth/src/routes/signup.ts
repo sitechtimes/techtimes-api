@@ -28,7 +28,7 @@ router.post('/api/auth/signup',
         throw new BadRequestError('Email is in use');
     }
 
-    const randString = await Verify.generateToken();
+    const randString = await Verify.generateToken(email);
 
     const user = User.build({ name, email, password, verificationCode: randString });
     await user.save();

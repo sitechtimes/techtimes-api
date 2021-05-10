@@ -1,10 +1,16 @@
 import { randomBytes } from 'crypto';
 import nodemailer from 'nodemailer';
+import jwt from "jsonwebtoken";
 
 export class Verify {
 
-   static async generateToken() {
-       return randomBytes(12).toString('hex');
+   static async generateToken(email: String) {
+       const key = jwt.sign({email}, process.env.JWT_KEY!, {
+           expiresIn: '20m'
+       });
+
+       console.log(key)
+       return key
    }
 
    static async sendVerificationEmail(email: String, code: String){

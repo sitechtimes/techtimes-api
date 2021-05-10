@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, {decode} from 'jsonwebtoken';
 
 import {User} from "../models/user";
-import {NotFoundError} from "@sitechtimes/shared";
+import {BadRequestError, NotFoundError} from "@sitechtimes/shared";
 
 const router = express.Router();
 
@@ -14,6 +14,12 @@ router.get('/api/auth/verify/:token', async (req: Request, res: Response) => {
 
     if (!user) {
         throw new NotFoundError();
+    }
+
+    const d: any = decode(token);
+
+    if (Date.now() > d.exp * 1000) {
+        throw new BadRequestError('Token is not valid')
     }
 
     user.verified = true
