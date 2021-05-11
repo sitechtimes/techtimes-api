@@ -1,7 +1,8 @@
 import express, { Request, Response } from 'express';
-import {NotFoundError} from "@sitechtimes/shared";
+import {NotAuthorizedError, NotFoundError} from "@sitechtimes/shared";
 import {requireAuth} from "@sitechtimes/shared";
 import {User} from "../models/user";
+import {Role} from "../models/role";
 
 const router = express.Router();
 
@@ -15,12 +16,22 @@ router.put('/api/users/:id', requireAuth, async (req: Request, res: Response) =>
         throw new NotFoundError();
     }
 
-    const image = imageUrl === undefined ? user.imageUrl : imageUrl;
-    const updatedRole = role === undefined ? user.role : role;
+    if (user.id !== req.currentUser!.id && req.currentUser!.role !== Role.Admin ) {
+        throw new NotAuthorizedError();
+    }
 
-    user.set({ imageUrl: image, role: updatedRole });
+    if (user.id === req.currentUser!.id) {
+        const image = imageUrl === undefined ? user.imageUrl : imageUrl;
+        user.set({ imageUrl: image });
+    }
+
+    if (req.currentUser!.role === Role.Admin) {
+        const updatedRole = role === undefined ? user.role : role;
+        user.set({ role: updatedRole });
+    }
 
     await user.save();
+    console.log(user);
 
     res.send(user);
 });

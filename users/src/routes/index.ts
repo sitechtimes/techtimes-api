@@ -1,20 +1,14 @@
 import express, { Request, Response } from 'express';
-import {NotAuthorizedError} from "@sitechtimes/shared";
+import {NotAuthorizedError, requireAuth, roles} from "@sitechtimes/shared";
 import {Role} from "../models/role";
 import {User} from "../models/user";
 
-const router =express.Router();
+const router = express.Router();
 
-router.get('/api/users/', async (req: Request, res: Response) => {
-
-    // TODO: create middleware for role auth
-    if(req.currentUser!.role != "admin"){
-        throw new NotAuthorizedError();
-    }
-
+router.get('/api/users/', requireAuth, roles(['admin']), async (req: Request, res: Response) => {
     const users = await User.find({ role: { $ne: Role.Admin }});
 
     res.send(users);
 });
 
-export { router as usersRouter }
+export { router as usersRouter };
