@@ -11,6 +11,9 @@ import {usersRouter} from "./routes";
 import {deleteUserRouter} from "./routes/delete";
 import {updateUserRouter} from "./routes/update";
 
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from '../swagger.json'
+
 const app = express();
 app.set('trust proxy', true);
 
@@ -25,6 +28,8 @@ app.use(
 );
 
 app.use(currentUser);
+
+app.use('/api/users/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(usersRouter);
 app.use(showUserRouter);

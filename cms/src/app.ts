@@ -14,6 +14,9 @@ import {reviewDraftsRouter} from "./routes/review";
 import {deleteDraftRouter} from "./routes/delete";
 import {publishDraftRouter} from "./routes/publish";
 
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from '../swagger.json'
+
 const app = express();
 app.set('trust proxy', true);
 
@@ -28,6 +31,8 @@ app.use(
 );
 
 app.use(currentUser);
+
+app.use('/api/cms/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(readyDraftsRouter);
 app.use(reviewDraftsRouter);

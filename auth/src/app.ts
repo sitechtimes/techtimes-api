@@ -11,6 +11,9 @@ import {currentUserRouter} from "./routes/current-user";
 import {signoutRouter} from "./routes/signout";
 import {verifyRouter} from "./routes/verify";
 
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from '../swagger.json'
+
 const app = express();
 app.set('trust proxy', true);
 
@@ -23,6 +26,8 @@ app.use(
         secure: false // TODO: has to be true before prod
     })
 );
+
+app.use('/api/auth/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(signupRouter);
 app.use(signinRouter);

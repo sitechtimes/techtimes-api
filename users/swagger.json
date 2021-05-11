@@ -1,0 +1,55 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "title": "Users API",
+    "description": "A description of our project ... ",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all the drafts in system for a specific user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Draft"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Draft": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isHungry": {
+          "type": "boolean"
+        },
+        "lastFedDate": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
