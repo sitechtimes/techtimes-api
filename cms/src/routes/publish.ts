@@ -1,13 +1,12 @@
 import express, { Request, Response } from 'express';
-import {NotFoundError, requireAuth} from "@sitechtimes/shared";
+import {NotFoundError, requireAuth, roles} from "@sitechtimes/shared";
 import {Draft} from "../models/draft";
 import {Article} from "../models/article";
 import mongoose from "mongoose";
 
 const router = express.Router();
 
-router.post('/api/cms/:id/publish', requireAuth, async (req: Request, res: Response) => {
-    console.log("hello")
+router.post('/api/cms/:id/publish', requireAuth, roles(['admin']), async (req: Request, res: Response) => {
 
     const draft = await Draft.findById(req.params.id);
 

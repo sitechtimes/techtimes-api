@@ -1,17 +1,13 @@
 import express, {Request, Response} from "express";
-import {requireAuth} from "@sitechtimes/shared";
+import {requireAuth, roles} from "@sitechtimes/shared";
 import {Draft, DraftDoc} from "../models/draft";
-import {Role} from "../models/role";
 import {DraftStatus} from "../models/draftStatus";
 
 const router = express.Router();
 
-router.get('/api/cms/ready/', requireAuth, async (req: Request, res: Response) => {
-    let drafts: Array<DraftDoc> = [];
+router.get('/api/cms/ready/', requireAuth, roles(['admin']), async (req: Request, res: Response) => {
 
-    if (req.currentUser!.role == Role.Admin) {
-        drafts = await Draft.find({ status: DraftStatus.Ready });
-    }
+    let drafts = await Draft.find({ status: DraftStatus.Ready });
 
     res.send(drafts)
 });
