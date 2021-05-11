@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
+import {Category} from "./category";
 
 interface ArticleAttrs {
     title: string;
     content: string;
     imageUrl: string;
+    category: string;
     user: {
         id: string;
         name: string;
@@ -19,6 +21,7 @@ export interface ArticleDoc extends mongoose.Document {
     title: string;
     content: string;
     imageUrl: string;
+    category: string;
     user: {
         id: string;
         name: string;
@@ -38,6 +41,10 @@ const articleSchema = new mongoose.Schema({
     },
     content: {
         type: String,
+        required: true
+    },
+    category: {
+        type: Category,
         required: true
     },
     user: {

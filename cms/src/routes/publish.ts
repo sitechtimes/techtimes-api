@@ -26,6 +26,7 @@ router.post('/api/cms/:id/publish', requireAuth, roles(['admin']), async (req: R
         title: draft.title,
         content: draft.content,
         imageUrl: draft.imageUrl,
+        category: draft.category,
         user: {
             id: draft.userId,
             name: users[0].name,
