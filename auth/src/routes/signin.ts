@@ -32,17 +32,22 @@ router.post('/api/auth/signin',
         throw new BadRequestError('Invalid credentials');
     }
 
-    const userJWT = jwt.sign({
-
+    const payload = {
         id: existingUser.id,
-        email: existingUser.email
-    } , process.env.JWT_KEY!);
+        email: existingUser.email,
+        role: existingUser.role
+    }
+
+    const userJWT = jwt.sign(payload, process.env.JWT_KEY!);
 
     req.session = {
         jwt: userJWT
     };
 
-    res.status(200).send(existingUser);
+    res.status(200).send({
+        ...existingUser.toJSON(),
+        "token": userJWT
+    });
 });
 
 export { router as signinRouter };

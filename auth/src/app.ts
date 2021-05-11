@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import 'express-async-errors'
 import { json } from 'body-parser';
-import helmet from 'helmet';
+import cors from 'cors';
 import cookieSession from "cookie-session";
 
 import {errorHandler, NotFoundError } from "@sitechtimes/shared";
@@ -9,12 +9,16 @@ import {signupRouter} from "./routes/signup";
 import {signinRouter} from "./routes/signin";
 import {currentUserRouter} from "./routes/current-user";
 import {signoutRouter} from "./routes/signout";
+import {verifyRouter} from "./routes/verify";
+
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from '../swagger.json'
 
 const app = express();
 app.set('trust proxy', true);
 
 app.use(json());
-app.use(helmet());
+app.use(cors());
 
 app.use(
     cookieSession({
@@ -23,10 +27,13 @@ app.use(
     })
 );
 
+app.use('/api/auth/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(currentUserRouter);
 app.use(signoutRouter);
+app.use(verifyRouter);
 
 
 app.all('*', (req: Request, res: Response) => {

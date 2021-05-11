@@ -1,12 +1,10 @@
 import mongoose from 'mongoose';
-import {Password} from "../services/password";
 import {Role} from "./role";
 
 interface UserAttrs {
     name: string;
     email: string;
     password: string;
-    verificationCode: string;
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
@@ -18,8 +16,7 @@ interface UserDoc extends mongoose.Document {
     email: string;
     password: string;
     role: Role;
-    verified: boolean;
-    verificationCode: string;
+    imageUrl: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -40,13 +37,10 @@ const userSchema = new mongoose.Schema({
         default: Role.Writer,
         required: true
     },
-    verified: {
-        type: Boolean,
-        default: false,
-        required: true,
-    },
-    verificationCode: {
+    // TODO: change default url
+    imageUrl: {
         type: String,
+        default: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
         required: true
     }
 }, {
@@ -56,23 +50,9 @@ const userSchema = new mongoose.Schema({
             delete ret._id;
             delete ret.password;
             delete ret.__v;
-            delete ret.verificationCode;
         }
     }
 });
-
-userSchema.pre('save', async function (done){
-    if (this.isModified('password')){
-        const hashed = await Password.toHash(this.get('password'));
-        this.set('password', hashed);
-    }
-
-    done();
-});
-
-userSchema.statics.build = (attrs: UserAttrs) => {
-    return new User(attrs)
-};
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema)
 

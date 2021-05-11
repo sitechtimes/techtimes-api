@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import jwt from 'jsonwebtoken';
 
 import {User} from "../models/user";
 import {validateRequest, BadRequestError} from "@sitechtimes/shared";
+import {Verify} from "../services/verify";
 
 const router = express.Router();
 
@@ -28,19 +28,15 @@ router.post('/api/auth/signup',
         throw new BadRequestError('Email is in use');
     }
 
-    const user = User.build({ name, email, password });
+    const randString = await Verify.generateToken(email);
+
+    const user = User.build({ name, email, password, verificationCode: randString });
     await user.save();
 
-    const userJWT = jwt.sign({
-        id: user.id,
-        email: user.email
-    }, process.env.JWT_KEY!, { expiresIn: '6h' });
+    await Verify.sendVerificationEmail(email, randString);
 
-    req.session = {
-        jwt: userJWT
-    };
+    res.status(201).send(user.toJSON());
 
-    res.status(201).send(user)
 });
 
 export { router as signupRouter } ;
