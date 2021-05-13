@@ -1,15 +1,18 @@
 import express, { Request, Response } from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
-import helmet from 'helmet';
 import cookieSession from "cookie-session";
 import cors from 'cors';
 
 import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
-import {showUserRouter} from "./routes/show";
-import {usersRouter} from "./routes";
-import {deleteUserRouter} from "./routes/delete";
-import {updateUserRouter} from "./routes/update";
+import {createDraftRouter} from "./routes/new";
+import {showDraftRouter} from "./routes/show";
+import {indexDraftRouter} from "./routes";
+import {updateDraftRouter} from "./routes/update";
+import {readyDraftsRouter} from "./routes/ready";
+import {reviewDraftsRouter} from "./routes/review";
+import {deleteDraftRouter} from "./routes/delete";
+import {publishDraftRouter} from "./routes/publish";
 
 import swaggerUi from 'swagger-ui-express';
 import * as swaggerDocument from '../swagger.json'
@@ -29,12 +32,16 @@ app.use(
 
 app.use(currentUser);
 
-app.use('/api/users/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/cms/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use(usersRouter);
-app.use(showUserRouter);
-app.use(deleteUserRouter);
-app.use(updateUserRouter)
+app.use(readyDraftsRouter);
+app.use(reviewDraftsRouter);
+app.use(indexDraftRouter);
+app.use(createDraftRouter);
+app.use(showDraftRouter);
+app.use(updateDraftRouter);
+app.use(deleteDraftRouter);
+app.use(publishDraftRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();

@@ -6,6 +6,7 @@ interface UserAttrs {
     name: string;
     email: string;
     password: string;
+    verificationCode: string;
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
@@ -17,6 +18,8 @@ interface UserDoc extends mongoose.Document {
     email: string;
     password: string;
     role: Role;
+    verified: boolean;
+    verificationCode: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -36,6 +39,15 @@ const userSchema = new mongoose.Schema({
         type: Role,
         default: Role.Writer,
         required: true
+    },
+    verified: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
+    verificationCode: {
+        type: String,
+        required: true
     }
 }, {
     toJSON:{
@@ -44,6 +56,7 @@ const userSchema = new mongoose.Schema({
             delete ret._id;
             delete ret.password;
             delete ret.__v;
+            delete ret.verificationCode;
         }
     }
 });
@@ -53,6 +66,7 @@ userSchema.pre('save', async function (done){
         const hashed = await Password.toHash(this.get('password'));
         this.set('password', hashed);
     }
+
     done();
 });
 

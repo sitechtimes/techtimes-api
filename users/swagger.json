@@ -1,0 +1,124 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "title": "Users API",
+    "description": "The Users microservice is concerned with viewing, deleting, and editing User                                    ",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": " It will retrieve a full list of all Users",
+        "responses": {
+          "200": {
+            "description": "Success! You were signed in and are an Admin so you got a list of all the Users.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a certain User based off of an id",
+        "responses": {
+          "200": {
+            "description": "Will remove a User with a certain ID",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }, 
+    "/users/:id": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get the User and all associated articles based off of an id",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved ID. Was signed in",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "(Not Found Error) Couldn't find the Route, the ID likely does not exist and thus their isno User",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a certain User based off of an id",
+        "responses": {
+          "200": {
+            "description": "Will remove a User with a certain ID",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "(Not Authorized Error) You can only delete an account if your id matches with the id of the user being deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    } 
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "required": ["true"]
+        },
+        "name": {
+          "type": "string",
+          "required": ["true"]
+        },
+        "email": {
+          "type": "string",
+          "required": ["true"]
+        },
+        "password": {
+          "type": "string",
+          "required": ["true"]
+        },
+        "role": {
+          "type": "Role",
+          "required": ["true"]
+        },
+        "imageUrl": {
+          "type": "string",
+          "required": ["false"]
+        }
+      }
+    }
+  }
+}

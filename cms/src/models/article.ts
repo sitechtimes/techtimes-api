@@ -1,9 +1,16 @@
 import mongoose from 'mongoose';
-import {ArticleStatus} from "./articleStatus";
+import {Category} from "./category";
 
 interface ArticleAttrs {
     title: string;
     content: string;
+    imageUrl: string;
+    category: string;
+    user: {
+        id: string;
+        name: string;
+        imageUrl: string;
+    }
 }
 
 interface ArticleModel extends mongoose.Model<ArticleDoc> {
@@ -13,7 +20,13 @@ interface ArticleModel extends mongoose.Model<ArticleDoc> {
 export interface ArticleDoc extends mongoose.Document {
     title: string;
     content: string;
-    status: ArticleStatus;
+    imageUrl: string;
+    category: string;
+    user: {
+        id: string;
+        name: string;
+        imageUrl: string;
+    }
 }
 
 const articleSchema = new mongoose.Schema({
@@ -23,16 +36,30 @@ const articleSchema = new mongoose.Schema({
     },
     imageUrl: {
         type: String,
+        default: null,
         required: false
-    },
-    status: {
-        type: ArticleStatus,
-        required: true,
-        default: ArticleStatus.Draft
     },
     content: {
         type: String,
         required: true
+    },
+    category: {
+        type: Category,
+        required: true
+    },
+    user: {
+        id: {
+            type: mongoose.Types.ObjectId,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        imageUrl: {
+            type: String,
+            required: false
+        }
     }
 }, {
     timestamps: true,

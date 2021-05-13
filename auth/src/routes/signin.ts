@@ -45,7 +45,7 @@ router.post('/api/auth/signin',
     };
 
     res.status(200).send({
-        ...payload,
+        ...existingUser.toJSON(),
         "token": userJWT
     });
 });
