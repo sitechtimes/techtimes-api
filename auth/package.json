@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sitechtimes/shared": "^1.0.20",
+    "@sitechtimes/shared": "^1.0.21",
     "@types/cookie-session": "^2.0.42",
     "@types/cors": "^2.8.10",
     "@types/crypto-random-string": "^2.0.0",
