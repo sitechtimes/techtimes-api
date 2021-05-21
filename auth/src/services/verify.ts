@@ -26,7 +26,7 @@ export class Verify {
            from: process.env.EMAIL_USER,
            to: email.toString(),
            subject: "TechTimes Email confirmation",
-           html: `This is a test confirmation email: http://localhost:8000/auth/verify/${code}`
+           html: `Hello there, click the following link to verify your email: <a href="https://cms.sitechtimes.com/auth/verify/${code}">Verify email</a>`
        }
 
        return transport.sendMail(mailOptions);
