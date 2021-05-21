@@ -3,10 +3,12 @@ import {NotFoundError, requireAuth, roles} from "@sitechtimes/shared";
 import {Draft} from "../models/draft";
 import {Article} from "../models/article";
 import mongoose from "mongoose";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.post('/api/cms/:id/publish', requireAuth, roles(['admin']), async (req: Request, res: Response) => {
+router.post('/cms/:id/publish', requireAuth, roles(['admin']), async (req: Request, res: Response) => {
+    await connectToDatabase();
 
     const draft = await Draft.findById(req.params.id);
 

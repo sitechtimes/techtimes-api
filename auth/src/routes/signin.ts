@@ -5,10 +5,11 @@ import {validateRequest, BadRequestError} from "@sitechtimes/shared";
 
 import {User} from "../models/user";
 import {Password} from "../services/password";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.post('/api/auth/signin',
+router.post('/auth/signin',
     [
     body('email')
         .isEmail()
@@ -18,6 +19,8 @@ router.post('/api/auth/signin',
         .notEmpty()
         .withMessage('You must supply a password')
     ], validateRequest, async (req: Request, res: Response) => {
+
+    await connectToDatabase();
 
     const { email, password } = req.body;
     const existingUser = await User.findOne({ email });

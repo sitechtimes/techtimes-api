@@ -49,7 +49,7 @@ const articleSchema = new mongoose.Schema({
     },
     user: {
         id: {
-            type: mongoose.Types.ObjectId,
+            type: String,
             required: true
         },
         name: {

@@ -2,12 +2,16 @@ import express, { Request, Response } from 'express';
 import {NotAuthorizedError, NotFoundError, requireAuth} from "@sitechtimes/shared";
 import {Draft} from "../models/draft";
 import {Role} from "../models/role";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.get('/api/cms/:id', requireAuth, async (req: Request, res: Response) => {
+router.get('/cms/:id', requireAuth, async (req: Request, res: Response) => {
+    const { id } = req.params;
 
-    const draft = await Draft.findById(req.params.id);
+    await connectToDatabase();
+
+    const draft = await Draft.findById(id);
 
     if (!draft) {
         throw new NotFoundError();
