@@ -6,7 +6,7 @@ frameworkVersion: '2'
 
 provider:
   name: aws
-  stage: dev
+  stage: ${opt:stage}
   runtime: nodejs12.x
   lambdaHashingVersion: '20201221'
 
@@ -23,9 +23,9 @@ functions:
 
 custom:
   dotenv:
-    path: .././.env.development
+    path: .././.env.dev
 
 plugins:
-  - serverless-offline
   - serverless-plugin-typescript
+  - serverless-offline
   - serverless-dotenv-plugin
