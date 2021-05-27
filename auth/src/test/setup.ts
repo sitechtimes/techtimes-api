@@ -44,7 +44,7 @@
 //     const password = "password";
 //
 //     const response = await request(slsApp)
-//         .post('/api/auth/signup')
+//         .post('/auth/signup')
 //         .send({
 //             name, email, password
 //         })

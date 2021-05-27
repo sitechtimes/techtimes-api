@@ -23,7 +23,7 @@ functions:
 
 custom:
   dotenv:
-    path: .././.env.${opt.stage}
+    path: .././.env.${opt:stage}
 
 plugins:
   - serverless-plugin-typescript
