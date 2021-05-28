@@ -4,5 +4,5 @@ install_deps() {
 
 install_deps users
 install_deps auth
-install_deps articles
+install_deps cms
 
