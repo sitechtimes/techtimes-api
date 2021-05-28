@@ -3,6 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from "cookie-session";
 import cors from 'cors';
+import serverless from 'serverless-http';
 
 import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
 import {createDraftRouter} from "./routes/new";
@@ -14,8 +15,8 @@ import {reviewDraftsRouter} from "./routes/review";
 import {deleteDraftRouter} from "./routes/delete";
 import {publishDraftRouter} from "./routes/publish";
 
-import swaggerUi from 'swagger-ui-express';
-import * as swaggerDocument from '../swagger.json'
+// import swaggerUi from 'swagger-ui-express';
+// import * as swaggerDocument from '../swagger.json'
 
 const app = express();
 app.set('trust proxy', true);
@@ -32,7 +33,7 @@ app.use(
 
 app.use(currentUser);
 
-app.use('/api/cms/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api/cms/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(readyDraftsRouter);
 app.use(reviewDraftsRouter);
@@ -49,4 +50,5 @@ app.all('*', (req: Request, res: Response) => {
 
 app.use(errorHandler)
 
-export { app };
+const slsApp = serverless(app);
+export { slsApp };

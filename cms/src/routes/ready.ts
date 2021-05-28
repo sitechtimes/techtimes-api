@@ -1,13 +1,15 @@
 import express, {Request, Response} from "express";
 import {requireAuth, roles} from "@sitechtimes/shared";
-import {Draft, DraftDoc} from "../models/draft";
+import {Draft} from "../models/draft";
 import {DraftStatus} from "../models/draftStatus";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.get('/api/cms/ready/', requireAuth, roles(['admin']), async (req: Request, res: Response) => {
+router.get('/cms/ready/', requireAuth, roles(['admin']), async (req: Request, res: Response) => {
+    await connectToDatabase();
 
-    let drafts = await Draft.find({ status: DraftStatus.Ready });
+    const drafts = await Draft.find({ status: DraftStatus.Ready });
 
     res.send(drafts)
 });

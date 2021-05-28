@@ -3,10 +3,13 @@ import {NotAuthorizedError, NotFoundError, requireAuth} from "@sitechtimes/share
 import {Role} from "../models/role";
 import {DraftStatus} from "../models/draftStatus";
 import {Draft} from "../models/draft";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.put('/api/cms/:id/', requireAuth, async (req: Request, res: Response) => {
+router.put('/cms/:id/', requireAuth, async (req: Request, res: Response) => {
+    await connectToDatabase();
+
     const draft = await Draft.findById(req.params.id);
 
     if (!draft){

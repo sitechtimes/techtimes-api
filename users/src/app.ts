@@ -4,15 +4,16 @@ import { json } from 'body-parser';
 import helmet from 'helmet';
 import cookieSession from "cookie-session";
 import cors from 'cors';
+import serverless from 'serverless-http';
 
-import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
+import {errorHandler, NotFoundError, currentUser} from "@sitechtimes/shared";
 import {showUserRouter} from "./routes/show";
 import {usersRouter} from "./routes";
 import {deleteUserRouter} from "./routes/delete";
 import {updateUserRouter} from "./routes/update";
 
-import swaggerUi from 'swagger-ui-express';
-import * as swaggerDocument from '../swagger.json'
+// import swaggerUi from 'swagger-ui-express';
+// import * as swaggerDocument from '../swagger.json'
 
 const app = express();
 app.set('trust proxy', true);
@@ -29,7 +30,7 @@ app.use(
 
 app.use(currentUser);
 
-app.use('/api/users/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api/users/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(usersRouter);
 app.use(showUserRouter);
@@ -42,4 +43,6 @@ app.all('*', (req: Request, res: Response) => {
 
 app.use(errorHandler)
 
-export { app };
+const slsApp = serverless(app)
+
+export { slsApp };

@@ -1,5 +1,6 @@
 import { randomBytes } from 'crypto';
 import nodemailer from 'nodemailer';
+import smtpTransport from 'nodemailer-smtp-transport';
 import jwt from "jsonwebtoken";
 
 export class Verify {
@@ -11,24 +12,24 @@ export class Verify {
    }
 
    static async sendVerificationEmail(email: String, code: String){
-       const transport = nodemailer.createTransport({
+       const transport = nodemailer.createTransport(smtpTransport({
            host: 'smtp.gmail.com',
            port: 587,
            secure: false,
            auth: {
-               user: "sitechtimesinfo@gmail.com",
-               pass: "$FullStack"
+               user: process.env.EMAIL_USER,
+               pass: process.env.EMAIL_PASSWORD
            }
-       });
+       }));
 
        let mailOptions = {
-           from: "sitechtimesinfo@gmail.com",
+           from: process.env.EMAIL_USER,
            to: email.toString(),
            subject: "TechTimes Email confirmation",
-           html: `This is a test confirmation email: http://localhost:8000/auth/verify/${code}`
+           html: `Hello there, click the following link to verify your email: <a href="https://cms.sitechtimes.com/auth/verify/${code}">Verify email</a>`
        }
 
-       transport.sendMail(mailOptions, () => { });
+       return transport.sendMail(mailOptions);
    }
 
 }

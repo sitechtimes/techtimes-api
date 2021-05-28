@@ -1,6 +1,9 @@
 export enum Category {
-    World= 'world',
-    US= 'us',
-    Technology= 'technology',
-    Sports= 'sports',
+    COVID = "covid",
+    Entertainment ="entertainment",
+    World = 'world',
+    US = 'us',
+    Science ="science",
+    Technology = 'technology',
+    Sports = 'sports'
 }

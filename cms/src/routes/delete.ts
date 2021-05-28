@@ -1,10 +1,13 @@
 import express, { Request, Response } from 'express';
 import {NotFoundError, requireAuth, NotAuthorizedError} from "@sitechtimes/shared";
 import {Draft} from "../models/draft";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.delete('/api/cms/:id/', requireAuth, async (req: Request, res: Response) => {
+router.delete('/cms/:id/', requireAuth, async (req: Request, res: Response) => {
+    await connectToDatabase();
+
     const draft = await Draft.findByIdAndDelete(req.params.id);
 
     if (!draft) {

@@ -4,8 +4,8 @@ import { json } from 'body-parser';
 import helmet from 'helmet';
 import cookieSession from "cookie-session";
 
-import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
-import {sampleArticleRouter} from "./routes/sample";
+import {errorHandler, NotFoundError} from "@sitechtimes/shared";
+import {articleRouter} from "./routes/articles";
 
 const app = express();
 app.set('trust proxy', true);
@@ -20,14 +20,13 @@ app.use(
     })
 );
 
-app.use(sampleArticleRouter);
+app.use(articleRouter);
 
-app.use(currentUser)
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();
 });
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 export { app };

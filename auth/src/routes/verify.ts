@@ -3,10 +3,12 @@ import jwt, {decode} from 'jsonwebtoken';
 
 import {User} from "../models/user";
 import {BadRequestError, NotFoundError} from "@sitechtimes/shared";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.get('/api/auth/verify/:token', async (req: Request, res: Response) => {
+router.get('/auth/verify/:token', async (req: Request, res: Response) => {
+    await connectToDatabase();
 
     const { token } = req.params;
 

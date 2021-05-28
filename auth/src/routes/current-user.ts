@@ -3,8 +3,7 @@ import {currentUser} from "@sitechtimes/shared";
 
 const router = express.Router();
 
-router.get('/api/auth/current-user',
-    currentUser, (req: Request, res: Response) => {
+router.get('/auth/current-user', currentUser, (req: Request, res: Response) => {
 
     res.send({...req.currentUser || null });
 });

@@ -3,11 +3,13 @@ import {NotAuthorizedError, NotFoundError} from "@sitechtimes/shared";
 import {requireAuth} from "@sitechtimes/shared";
 import {User} from "../models/user";
 import {Role} from "../models/role";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-// TODO: route should be update to allow admin to change user's role
-router.put('/api/users/:id', requireAuth, async (req: Request, res: Response) => {
+router.put('/users/:id', requireAuth, async (req: Request, res: Response) => {
+    await connectToDatabase();
+
     const { imageUrl, role } = req.body;
 
     const user = await User.findById(req.params.id);
@@ -31,7 +33,6 @@ router.put('/api/users/:id', requireAuth, async (req: Request, res: Response) =>
     }
 
     await user.save();
-    console.log(user);
 
     res.send(user);
 });

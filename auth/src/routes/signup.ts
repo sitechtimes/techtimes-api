@@ -4,10 +4,11 @@ import { body } from 'express-validator';
 import {User} from "../models/user";
 import {validateRequest, BadRequestError} from "@sitechtimes/shared";
 import {Verify} from "../services/verify";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.post('/api/auth/signup',
+router.post('/auth/signup',
     [
         body('name')
             .notEmpty().withMessage("Name can't be empty"),
@@ -20,6 +21,8 @@ router.post('/api/auth/signup',
             .isLength({min: 8, max: 16})
             .withMessage('Password must be between 8 and 16 characters')
     ], validateRequest, async (req: Request, res: Response) => {
+
+    await connectToDatabase();
 
     const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
