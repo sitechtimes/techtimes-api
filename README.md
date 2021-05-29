@@ -21,7 +21,12 @@ EMAIL_PASSWORD=[INSERT DEV EMAIL_PASSWORD HERE]
 bash scripts/npm-install.sh
 ```
 
-4. Start running the services using dep-gateways bash script
+4. Install sls-multi-gateways
+```bash
+npm install -g sls-multi-gateways
+```
+
+5. Start running the services using dep-gateways bash script
 ```bash
 bash scripts/dep-gateways.sh -s [env]
 ```
