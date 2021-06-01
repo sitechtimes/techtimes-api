@@ -16,7 +16,7 @@
   ],
   "swagger": "2.0",
   "paths": {
-    "/users": {
+    "/api/users": {
       "get": {
         "tags": [
           "User"
@@ -31,23 +31,9 @@
           }
         }
 
-      },
-      "delete": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Delete a certain User based off of an id",
-        "responses": {
-          "200": {
-            "description": "Will remove a User with a certain ID",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        }
       }
     }, 
-    "/users/:id": {
+    "/api/users/:id": {
       "get": {
         "tags": [
           "User"
@@ -74,7 +60,7 @@
         ],
         "summary": "Delete a certain User based off of an id",
         "responses": {
-          "200": {
+          "204": {
             "description": "Will remove a User with a certain ID",
             "schema": {
               "$ref": "#/definitions/User"
@@ -87,6 +73,28 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a certain User with a certain ID",
+        "responses": {
+          "200": {
+            "description": "Successfully Updated a User with a certain ID",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "(Not Authorized Error) User is trying to edit a User with a different ID and/or User is not an Admin"
+          },
+          "404": {
+            "description": "(Not Found Error) A User does not exist with this ID",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
       }
     } 
   },
