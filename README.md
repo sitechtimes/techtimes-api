@@ -26,7 +26,7 @@ bash scripts/npm-install.sh
 npm install -g sls-multi-gateways
 ```
 
-5. Start running the services using dep-gateways bash script
+5. Start running the services using sls-multi-gateways
 ```bash
-bash scripts/dep-gateways.sh -s [env]
+sls-multi-gateways
 ```
