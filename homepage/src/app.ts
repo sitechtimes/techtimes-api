@@ -6,15 +6,7 @@ import cors from 'cors';
 import serverless from 'serverless-http';
 
 import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
-import {createDraftRouter} from "./routes/new";
-import {showDraftRouter} from "./routes/show";
-import {indexDraftRouter} from "./routes";
-import {updateDraftRouter} from "./routes/update";
-import {readyDraftsRouter} from "./routes/ready";
-import {reviewDraftsRouter} from "./routes/review";
-import {deleteDraftRouter} from "./routes/delete";
-import {publishDraftRouter} from "./routes/publish";
-import {categoriesRouter} from "./routes/categories";
+import {sampleRouter} from "./routes/sample";
 
 // import swaggerUi from 'swagger-ui-express';
 // import * as swaggerDocument from '../swagger.json'
@@ -32,19 +24,11 @@ app.use(
     })
 );
 
-app.use(currentUser);
+// app.use(currentUser);
 
 // app.use('/cms/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(sampleRouter);
 
-app.use(categoriesRouter);
-app.use(readyDraftsRouter);
-app.use(reviewDraftsRouter);
-app.use(indexDraftRouter);
-app.use(createDraftRouter);
-app.use(showDraftRouter);
-app.use(updateDraftRouter);
-app.use(deleteDraftRouter);
-app.use(publishDraftRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();
