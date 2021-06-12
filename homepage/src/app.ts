@@ -5,8 +5,8 @@ import cookieSession from "cookie-session";
 import cors from 'cors';
 import serverless from 'serverless-http';
 
-import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
-import {sampleRouter} from "./routes/sample";
+import {errorHandler, NotFoundError } from "@sitechtimes/shared";
+import {indexHomepageRouter} from "./routes/index";
 
 // import swaggerUi from 'swagger-ui-express';
 // import * as swaggerDocument from '../swagger.json'
@@ -24,10 +24,8 @@ app.use(
     })
 );
 
-// app.use(currentUser);
-
 // app.use('/cms/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use(sampleRouter);
+app.use(indexHomepageRouter);
 
 
 app.all('*', (req: Request, res: Response) => {
