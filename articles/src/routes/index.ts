@@ -1,18 +1,18 @@
 import express, { Request, Response } from 'express';
-import {validateRequest, BadRequestError} from "@sitechtimes/shared";
-
 import { Article } from "../models/article";
+import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.get('/api/articles', async (req: Request, res: Response) => {
+router.get('/articles/', async (req: Request, res: Response) => {
+    await connectToDatabase();
 
-    let cat = "";
+    let query: any = {};
     let limit = 20;
     let sortBy = { updatedAt: 1 };
 
-    if(req.query.cat) {
-        cat = req.query.cat.toString();
+    if(req.query.category) {
+        query.category = req.query.category.toString();
     }
 
     if (req.query.q) {
@@ -23,10 +23,10 @@ router.get('/api/articles', async (req: Request, res: Response) => {
         sortBy = { updatedAt: -1 };
     }
 
-    const articles = await Article.find({ category: cat }).sort(sortBy).limit(limit);
+    const articles = await Article.find(query).sort(sortBy).limit(limit);
 
     res.status(200).send(articles);
 });
 
 
-export { router as articleRouter };
+export { router as indexArticleRouter };
