@@ -1,0 +1,45 @@
+org: egonuler
+app: techtimes-api
+service: articles-srv
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  stage: ${opt:stage}
+  runtime: nodejs12.x
+  lambdaHashingVersion: '20201221'
+
+functions:
+  api:
+    handler: src/app.slsApp
+    events:
+      - http:
+          path: /
+          method: ANY
+      - http:
+          path: /{proxy+}
+          method: ANY
+
+custom:
+  domain:
+    dev: 'dev-api.sitechtimes.com'
+    prod: 'api.sitechtimes.com'
+
+  customDomain:
+    domainName: ${self:custom.domain.${opt:stage}}
+    stage: ${opt:stage}
+    basePath: articles
+    certificateName: '*.sitechtimes.com'
+    createRoute53Record: false
+    securityPolicy: tls_1_2
+    apiType: rest
+    autoDomain: false
+  dotenv:
+    path: .././.env.${opt:stage}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-dotenv-plugin
+  - serverless-domain-manager

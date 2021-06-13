@@ -4,8 +4,11 @@ import { json } from 'body-parser';
 import helmet from 'helmet';
 import cookieSession from "cookie-session";
 
-import {errorHandler, NotFoundError} from "@sitechtimes/shared";
-import {articleRouter} from "./routes/articles";
+import {currentUser, errorHandler, NotFoundError} from "@sitechtimes/shared";
+import {indexArticleRouter} from "./routes";
+import serverless from 'serverless-http';
+import {showArticleRouter} from "./routes/show";
+import {homepageArticlesRouter} from "./routes/homepage";
 
 const app = express();
 app.set('trust proxy', true);
@@ -20,8 +23,9 @@ app.use(
     })
 );
 
-app.use(articleRouter);
-
+app.use(homepageArticlesRouter);
+app.use(indexArticleRouter);
+app.use(showArticleRouter);
 
 app.all('*', (req: Request, res: Response) => {
     throw new NotFoundError();
@@ -29,4 +33,5 @@ app.all('*', (req: Request, res: Response) => {
 
 app.use(errorHandler);
 
-export { app };
+const slsApp = serverless(app);
+export { slsApp };
