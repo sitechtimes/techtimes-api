@@ -40,7 +40,9 @@ router.post('/cms/:id/publish', requireAuth, roles(['admin']), async (req: Reque
     });
 
     // create homepage article
-    if (Object.values(Position).includes(req.body.position)) {
+    const isValidPosition = Object.values(Position).includes(req.body.position);
+
+    if (isValidPosition) {
         await Homepage.findOneAndRemove({ position: req.body.position, category: draft.category});
 
         const homepage = Homepage.build({

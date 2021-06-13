@@ -9,6 +9,3 @@ services:
   - srvName: users
     srvPath: users
     srvSource: ./users
-  - srvName: homepage
-    srvPath: homepage
-    srvSource: ./homepage
