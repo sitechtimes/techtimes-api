@@ -15,3 +15,4 @@ deploy() {
 deploy users
 deploy auth
 deploy cms
+deploy articles
