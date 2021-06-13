@@ -4,8 +4,7 @@ import {Homepage} from "../models/homepage";
 
 const router = express.Router();
 
-// TODO: should be moved to articles service
-router.get('/cms/homepage/', async (req: Request, res: Response) => {
+router.get('/articles/homepage', async (req: Request, res: Response) => {
     await connectToDatabase();
 
     const query: any = {};
@@ -22,4 +21,4 @@ router.get('/cms/homepage/', async (req: Request, res: Response) => {
     res.send(homepages);
 });
 
-export { router as homepageRouter };
+export { router as homepageArticlesRouter };

@@ -9,3 +9,6 @@ services:
   - srvName: users
     srvPath: users
     srvSource: ./users
+  - srvName: articles
+    srvPath: articles
+    srvSource: ./articles

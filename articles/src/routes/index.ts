@@ -29,4 +29,4 @@ router.get('/articles/', async (req: Request, res: Response) => {
 });
 
 
-export { router as articleRouter };
+export { router as indexArticleRouter };
