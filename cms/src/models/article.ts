@@ -1,5 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, {plugin} from 'mongoose';
 import {Category} from "./category";
+
+const mongooseSlugPlugin = require('mongoose-slug-plugin')
 
 interface ArticleAttrs {
     title: string;
@@ -26,7 +28,8 @@ export interface ArticleDoc extends mongoose.Document {
         id: string;
         name: string;
         imageUrl: string;
-    }
+    },
+    slug: string;
 }
 
 const articleSchema = new mongoose.Schema({
@@ -60,6 +63,10 @@ const articleSchema = new mongoose.Schema({
             type: String,
             required: false
         }
+    },
+    slug: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true,
@@ -71,6 +78,12 @@ const articleSchema = new mongoose.Schema({
         }
     }
 });
+
+// articleSchema.pre('save', async function(done){
+//     console.log(slugify(this.get('title'), { lower: true }));
+//     done();
+// });
+articleSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=title%>' });
 
 articleSchema.statics.build = (attrs: ArticleAttrs) => {
     return new Article(attrs);
