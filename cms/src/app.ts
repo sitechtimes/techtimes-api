@@ -15,7 +15,6 @@ import {reviewDraftsRouter} from "./routes/review";
 import {deleteDraftRouter} from "./routes/delete";
 import {publishDraftRouter} from "./routes/publish";
 import {categoriesRouter} from "./routes/categories";
-import {homepageRouter} from "./routes/homepage";
 
 // import swaggerUi from 'swagger-ui-express';
 // import * as swaggerDocument from '../swagger.json'
@@ -37,7 +36,6 @@ app.use(currentUser);
 
 // app.use('/cms/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use(homepageRouter);
 app.use(categoriesRouter);
 app.use(readyDraftsRouter);
 app.use(reviewDraftsRouter);
