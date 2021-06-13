@@ -79,10 +79,6 @@ const articleSchema = new mongoose.Schema({
     }
 });
 
-// articleSchema.pre('save', async function(done){
-//     console.log(slugify(this.get('title'), { lower: true }));
-//     done();
-// });
 articleSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=title%>' });
 
 articleSchema.statics.build = (attrs: ArticleAttrs) => {
