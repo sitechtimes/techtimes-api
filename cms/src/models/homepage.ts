@@ -13,6 +13,7 @@ interface HomepageAttrs {
         imageUrl: string;
     },
     position: Position;
+    slug: string;
 }
 
 interface HomepageModel extends mongoose.Model<HomepageDoc> {
@@ -30,6 +31,7 @@ export interface HomepageDoc extends mongoose.Document {
         imageUrl: string;
     },
     position: Position;
+    slug: string;
 }
 
 const homepageSchema = new mongoose.Schema({
@@ -66,6 +68,10 @@ const homepageSchema = new mongoose.Schema({
     },
     position: {
         type: Position,
+        required: true
+    },
+    slug: {
+        type: String,
         required: true
     }
 }, {

@@ -27,7 +27,7 @@ router.post('/cms/:id/publish', requireAuth, roles(['admin']), async (req: Reque
         throw new NotFoundError();
     }
 
-    const article = Article.build({
+    const attrs = {
         title: draft.title,
         content: draft.content,
         imageUrl: draft.imageUrl,
@@ -37,7 +37,13 @@ router.post('/cms/:id/publish', requireAuth, roles(['admin']), async (req: Reque
             name: users[0].name,
             imageUrl: users[0].imageUrl
         }
-    });
+    }
+
+    const article = Article.build({ ...attrs });
+
+    await article.save();
+    await Draft.findByIdAndDelete(req.params.id);
+
 
     // create homepage article
     const isValidPosition = Object.values(Position).includes(req.body.position);
@@ -46,23 +52,13 @@ router.post('/cms/:id/publish', requireAuth, roles(['admin']), async (req: Reque
         await Homepage.findOneAndRemove({ position: req.body.position, category: draft.category});
 
         const homepage = Homepage.build({
-            title: draft.title,
-            content: draft.content,
-            imageUrl: draft.imageUrl,
-            category: draft.category,
-            user: {
-                id: draft.userId,
-                name: users[0].name,
-                imageUrl: users[0].imageUrl
-            },
-            position: req.body.position
+            ...attrs,
+            position: req.body.position,
+            slug: article.slug
         });
 
         await homepage.save();
     }
-
-    await article.save();
-    await Draft.findByIdAndDelete(req.params.id);
 
     res.sendStatus(200);
 });
