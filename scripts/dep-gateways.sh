@@ -9,7 +9,7 @@ done
 
 
 deploy() {
-  cd "../$1" && sls deploy --stage "$stage" && cd ../../;
+  cd "$1" && sls deploy --stage "$stage" && cd ../;
 }
 
 deploy users
