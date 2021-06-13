@@ -1,13 +1,25 @@
-import express, { Request, Response } from 'express';
-
-import { Article } from "../models/article";
+import express, {Request, Response} from "express";
+import {connectToDatabase} from "../index";
+import {Homepage} from "../models/homepage";
 
 const router = express.Router();
 
-router.get('/api/homepage', async (req: Request, res: Response) => {
-    //TODO: Get all articles that are marked for the homepage and mark their location on the homepage
-    const homepage = await Article.find({});
-    res.status(200).send(homepage);
+// TODO: should be moved to articles service
+router.get('/cms/homepage/', async (req: Request, res: Response) => {
+    await connectToDatabase();
+
+    const query: any = {};
+
+    if(req.query.category){
+        query.category = req.query.category.toString();
+    }
+
+    if(req.query.position){
+        query.position = req.query.position.toString();
+    }
+
+    const homepages = await Homepage.find(query);
+    res.send(homepages);
 });
 
 export { router as homepageRouter };
