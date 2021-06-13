@@ -4,6 +4,7 @@ import {Role} from "../models/role";
 import {DraftStatus} from "../models/draftStatus";
 import {Draft} from "../models/draft";
 import {connectToDatabase} from "../index";
+import sanitize from "sanitize-html";
 
 const router = express.Router();
 
@@ -23,8 +24,9 @@ router.put('/cms/:id/', requireAuth, async (req: Request, res: Response) => {
     // draft - for writer
     if (draft.userId == req.currentUser!.id) {
         // TODO - refactor update logic
-        const title = req.body.title == undefined ? draft.title : req.body.title
-        const content = req.body.content == undefined ? draft.content : req.body.content
+        const title = req.body.title == undefined ? draft.title : sanitize(req.body.title)
+        const content = req.body.content == undefined ? draft.content : sanitize(req.body.content)
+
         const status = req.body.status == DraftStatus.Review ? req.body.status : draft.status
         const imageUrl = req.body.imageUrl == undefined ? draft.imageUrl : req.body.imageUrl
         const category = req.body.category == undefined ? draft.category : req.body.category

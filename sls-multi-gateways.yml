@@ -1,3 +1,4 @@
+stage: dev
 services:
   - srvName: auth
     srvPath: auth
