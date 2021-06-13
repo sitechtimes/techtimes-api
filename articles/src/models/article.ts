@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 import {Category} from "./category";
 
-// const mongooseSlugPlugin = require('mongoose-slug-plugin')
-
 interface ArticleAttrs {
     title: string;
     content: string;
@@ -75,11 +73,10 @@ const articleSchema = new mongoose.Schema({
             ret.id = ret._id;
             delete ret._id;
             delete ret.__v;
+            delete ret.slug_history;
         }
     }
 });
-
-// articleSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=title%>' });
 
 articleSchema.statics.build = (attrs: ArticleAttrs) => {
     return new Article(attrs);
