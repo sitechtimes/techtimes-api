@@ -1,4 +1,4 @@
-stage: dev
+stage: local
 services:
   - srvName: auth
     srvPath: auth
