@@ -1,8 +1,7 @@
 .idea
 .DS_Store
 node_modules
-.env.dev
-.env.prod
+.env.*
 shared/
 .build/
 .serverless/

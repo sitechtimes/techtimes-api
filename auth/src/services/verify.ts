@@ -22,6 +22,7 @@ export class Verify {
            }
        }));
 
+       // TODO: change url to localhost when running on local
        let mailOptions = {
            from: process.env.EMAIL_USER,
            to: email.toString(),
