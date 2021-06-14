@@ -14,6 +14,7 @@ JWT_KEY=[INSERT DEV JWT_KEY HERE]
 MONGO_URI=[INSERT DEV MONGO_URI HERE]
 EMAIL_USER=[INSERT DEV EMAIL_USER HERE]
 EMAIL_PASSWORD=[INSERT DEV EMAIL_PASSWORD HERE]
+URL=[INSERT URL OF SITECHTIMES CMS HERE]
 ```
 
 3. Install dependencies for all services
@@ -21,12 +22,17 @@ EMAIL_PASSWORD=[INSERT DEV EMAIL_PASSWORD HERE]
 bash scripts/npm-install.sh
 ```
 
-4. Install sls-multi-gateways
+4. Install [mongodb community edition](https://docs.mongodb.com/v4.2/tutorial/install-mongodb-on-os-x/) and start running a local instance
+```bash
+mongo // when connecting to uri remove compressors=disabled
+```
+
+5. Install sls-multi-gateways
 ```bash
 npm install -g sls-multi-gateways
 ```
 
-5. Start running the services using sls-multi-gateways
+6. Start running the services using sls-multi-gateways
 ```bash
 sls-multi-gateways
 ```
