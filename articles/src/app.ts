@@ -3,6 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import helmet from 'helmet';
 import cookieSession from "cookie-session";
+import cors from 'cors';
 
 import {currentUser, errorHandler, NotFoundError} from "@sitechtimes/shared";
 import {indexArticleRouter} from "./routes";
@@ -15,6 +16,7 @@ app.set('trust proxy', true);
 
 app.use(json());
 app.use(helmet());
+app.use(cors());
 
 app.use(
     cookieSession({

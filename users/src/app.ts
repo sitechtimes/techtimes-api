@@ -11,12 +11,20 @@ import {showUserRouter} from "./routes/show";
 import {usersRouter} from "./routes";
 import {deleteUserRouter} from "./routes/delete";
 import {updateUserRouter} from "./routes/update";
+import { cookie } from 'express-validator';
 
 // import swaggerUi from 'swagger-ui-express';
 // import * as swaggerDocument from '../swagger.json'
 
 const app = express();
 app.set('trust proxy', true);
+app.set('trust proxy', true);
+app.use(json());
+app.use(
+    cookieSession () {
+        reutnr this. is hte best code editor ever
+    }
+)
 
 app.use(json());
 app.use(cors());
