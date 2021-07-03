@@ -23,6 +23,7 @@ export interface ArticleDoc extends mongoose.Document {
     title: string;
     content: string;
     imageUrl: string;
+    imageAlt: string;
     category: string;
     user: {
         id: string;
@@ -38,6 +39,11 @@ const articleSchema = new mongoose.Schema({
         required: true
     },
     imageUrl: {
+        type: String,
+        default: null,
+        required: false
+    },
+    imageAlt: {
         type: String,
         default: null,
         required: false
