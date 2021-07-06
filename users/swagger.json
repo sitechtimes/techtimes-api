@@ -61,10 +61,7 @@
             }
           },
           "404": {
-            "description": "(Not Found Error) Couldn't find the Route, the ID likely does not exist and thus their isno User",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
+            "description": "(Not Found Error) Couldn't find the Route, the ID likely does not exist and thus their is no User"
           }
         }
       },
@@ -81,10 +78,7 @@
             }
           },
           "401": {
-            "description": "(Not Authorized Error) You can only delete an account if your id matches with the id of the user being deleted",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
+            "description": "(Not Authorized Error) You can only delete an account if your id matches with the id of the user being deleted"
           }
         }
       }

@@ -1,0 +1,156 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "title": "Articles API",
+    "description": "The API for searcing through Articles and etrieving certain ones ",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "paths": {
+    "/articles/": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Get all all articles (default settings: top 20 articles sorted by Last Updated)",
+        "parameters": [
+            {
+              "in": "query",
+              "name": "category",
+              "schema": {
+              "ref": "#/definitions/category"
+              },
+              "summary": "The category of the article you're searching for"
+            },
+            {
+              "in": "query",
+              "name": "limit",
+              "default": "20",
+              "schema": {
+              "type": "integer"
+              },
+              "summary": "The number of articles retrieved"
+            },
+            {
+              "in": "query",
+              "name": "sortBy",
+              "default": "Updated: 1",
+              "summary": "The way articles are sorted by"
+          }
+        ]
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all requested articles",
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          }
+        }
+      },
+    "/articles/{slug}": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Find a single Article matching a particular slug",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "description": "Slug is needed to idenitfy individual"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved Article",
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          },
+          "404": {
+            "description": "No Article matching the slug was found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+      "Article": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "required": "true"
+          },
+          "content": {
+            "type": "string",
+            "required": "true"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["covid", "entertainment", "world", "us", "science", "technology", "sports" ],
+            "required": "true"
+          },
+          "imageUrl": {
+            "type": "string",
+            "required": "false"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "required": "true"
+              },
+              "name": {
+                "type": "string",
+                "required": "true"
+              },
+              "imageUrl": {
+                "type": "string",
+                "required": "false"
+              }
+            }
+          },
+          "slug": {
+            "type": "string",
+            "required": "true"
+          },
+          "timestamps": {
+            "type": "Date"
+          }
+        }
+      },
+      "Homepage": {
+        "allOf": [
+          {"$ref": "#/definitions/Article"},
+          {"properties": {
+            "position":{
+              "types": "string",
+              "ref": "#/definitions/position"
+            }
+          }
+          }
+        ]
+      },
+      "position": {
+        "type": "string",
+        "enum": ["main", "sub", "detail"]
+      },
+      "category": {
+        "type": "string",
+        "enum": ["covid", "entertainment", "world", "us", "science", "technology", "sports" ]
+      }
+
+  }
+}
