@@ -34,22 +34,13 @@
     }
   },
   "definitions": {
-    "Draft": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "isHungry": {
-          "type": "boolean"
-        },
-        "lastFedDate": {
-          "type": "string"
-        }
-      }
+    "Role": {
+      "type": "string",
+      "enum": ["writer", "admin", "editor"]
+    },
+    "User": {
+      "type": "string",
+      "enum": ["writer", "admin", "editor"]
     }
   }
 }
