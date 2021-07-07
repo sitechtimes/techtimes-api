@@ -2,7 +2,7 @@
   "info": {
     "version": "1.0.0",
     "title": "Articles API",
-    "description": "The API for searcing through Articles and etrieving certain ones ",
+    "description": "An API designed to look through a database of articles and retrieve and order them based on queries or slugs. ",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -21,33 +21,30 @@
         "tags": [
           "Articles"
         ],
-        "summary": "Get all all articles (default settings: top 20 articles sorted by Last Updated)",
+        "description": "Get all articles (default settings: top 20 articles sorted by Last Updated)",
         "parameters": [
             {
               "in": "query",
               "name": "category",
-              "schema": {
-              "ref": "#/definitions/category"
-              },
-              "summary": "The category of the article you're searching for"
+              "type": "string",
+              "enum":  ["covid", "entertainment", "world", "us", "science", "technology", "sports" ],
+              "description": "The category of the article you're searching for"
             },
             {
               "in": "query",
               "name": "limit",
               "default": "20",
-              "schema": {
-              "type": "integer"
-              },
-              "summary": "The number of articles retrieved"
+              "type": "integer",
+              "description": "The number of articles that you want to be retrieved"
             },
             {
               "in": "query",
               "name": "sortBy",
               "default": "Updated: 1",
-              "summary": "The way articles are sorted by"
+              "type": "string",
+              "description": "The method you sort articles by"
           }
-        ]
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved all requested articles",
@@ -56,7 +53,8 @@
             }
           }
         }
-      },
+      }
+    },
     "/articles/{slug}": {
       "get": {
         "tags": [
@@ -67,6 +65,8 @@
           {
             "in": "path",
             "name": "slug",
+            "required": true,
+            "type": "string",
             "description": "Slug is needed to idenitfy individual"
           }
         ],
@@ -82,72 +82,112 @@
           }
         }
       }
+    },
+    "/articles/homepage": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Find all articles assigned to the homepage matching a category and position",
+        "parameters": [
+          {
+            "enum": ["covid", "entertainment", "world", "us", "science", "technology", "sports" ],         
+            "in": "query",
+            "name": "category",
+            "type": "string",
+            "description": "The category is what the article is about. Only Three articles of each category will appear on the homepage"
+          },
+          {
+            "enum": ["main", "sub", "detail"],    
+            "in": "query",
+            "name": "position",
+            "type": "string",
+            "description": "The position defines where this article will be on the homepage - there are three positions to choose from"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success - retrieved homepage article",
+            "schema": {
+              "$ref": "#/definitions/Homepage"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
       "Article": {
         "type": "object",
         "properties": {
-          "title": {
-            "type": "string",
-            "required": "true"
-          },
-          "content": {
-            "type": "string",
-            "required": "true"
-          },
-          "category": {
-            "type": "string",
-            "enum": ["covid", "entertainment", "world", "us", "science", "technology", "sports" ],
-            "required": "true"
+          "_id": {
+            "type": "string"
           },
           "imageUrl": {
             "type": "string",
-            "required": "false"
+            "example": "http://res.cloudinary.com/sitechtimes/image/upload/v1622036165/sitecht..."
+          },
+          "title": {
+            "type": "string",
+            "example": "CS Project Showcase",
+            "description": "The Title of the article"
+          },
+          "content": {
+            "type": "string",
+            "example": "<p>This is where you should write the content of your article ...</p><...",
+            "description": "The content of the article"
+          },
+          "category": {
+            "type": "string",
+            "example": "Technology",
+            "enum": ["COVID", "Entertainment", "World", "US", "Science", "Technology", "Sports" ]
           },
           "user": {
             "type": "object",
             "properties": {
               "id": {
-                "type": "string",
-                "required": "true"
+                "type": "string"
               },
               "name": {
                 "type": "string",
-                "required": "true"
+                "example": "Bobby Thorson"
               },
               "imageUrl": {
-                "type": "string",
-                "required": "false"
+                "type": "string"
               }
             }
           },
           "slug": {
-            "type": "string",
-            "required": "true"
+            "type": "string"
           },
-          "timestamps": {
-            "type": "Date"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-05-26T13:37:42.534+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-05-26T13:37:42.534+00:00"
           }
         }
       },
       "Homepage": {
         "allOf": [
-          {"$ref": "#/definitions/Article"},
-          {"properties": {
-            "position":{
-              "types": "string",
-              "ref": "#/definitions/position"
+          {
+            "$ref": "#/definitions/Article"
+          },
+          {
+            "properties": {
+            "position": {
+              "type": "string",
+              "enum": ["main", "sub", "detail"]
             }
           }
           }
         ]
       },
-      "position": {
-        "type": "string",
-        "enum": ["main", "sub", "detail"]
-      },
-      "category": {
+      "Category": {
         "type": "string",
         "enum": ["covid", "entertainment", "world", "us", "science", "technology", "sports" ]
       }

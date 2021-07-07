@@ -16,69 +16,121 @@
   ],
   "swagger": "2.0",
   "paths": {
-    "/users": {
+    "/users/": {
       "get": {
         "tags": [
           "User"
         ],
-        "summary": " It will retrieve a full list of all Users",
+        "summary": "A full list of all Users will be retrieved",
         "responses": {
           "200": {
             "description": "Success! You were signed in and are an Admin so you got a list of all the Users.",
             "schema": {
               "$ref": "#/definitions/User"
             }
-          }
-        }
-
-      },
-      "delete": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Delete a certain User based off of an id",
-        "responses": {
-          "200": {
-            "description": "Will remove a User with a certain ID",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
+          },
+          "401": {
+            "description": "(Not Authorized Error) User must be authenticated and be an admin to use this API call"
           }
         }
       }
     }, 
-    "/users/:id": {
+    "/users/{id}": {
       "get": {
         "tags": [
           "User"
         ],
-        "summary": "Get the User and all associated articles based off of an id",
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved ID. Was signed in",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "404": {
-            "description": "(Not Found Error) Couldn't find the Route, the ID likely does not exist and thus their is no User"
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
           }
-        }
-      },
-      "delete": {
-        "tags": [
-          "User"
         ],
-        "summary": "Delete a certain User based off of an id",
+        "summary": "Get the User and all associated articles based off of the ID of a User",
         "responses": {
           "200": {
-            "description": "Will remove a User with a certain ID",
+            "description": "Successfully retrieved User based on ID. Was signed in",
             "schema": {
               "$ref": "#/definitions/User"
             }
           },
           "401": {
-            "description": "(Not Authorized Error) You can only delete an account if your id matches with the id of the user being deleted"
+            "description": "(Not Authorized Error) The user must be signed in and authenticated in order to retrieve their data"
+          },
+          "404": {
+            "description": "(Not Found Error) Couldn't find the Route, the ID likely does not exist and thus their is no User",
+            "schema": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "summary": "Delete a certain User based off of an id",
+        "responses": {
+          "204": {
+            "description": "Successfully deleated User with a certain ID",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "(Not Authorized Error) You can only delete an account if you are signed into that account (Current user's ID matches the ID being deleted)"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "properties": {
+                "imageUrl": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": ["admin", "editor", "writer"]
+                }
+              }
+            }
+          }
+        ],
+        "summary": "Update the profile of a User who is signed in, either their profile picture or role",
+        "responses": {
+          "200": {
+            "description": "User's profile has successfully been updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "(Not Authorized Error) Either the user tried to edit a user they were not signed in as (another user) or a user tried to change their role without being an account with an Admin role (only admins can change roles)"
+          },
+          "404": {
+            "description": "(Not Found Error) The User you are trying to edit does not exist"
           }
         }
       }
@@ -88,29 +140,36 @@
     "User": {
       "type": "object",
       "properties": {
-        "id": {
+        "_id": {
+          "type": "string"
+        },
+        "role": {
           "type": "string",
-          "required": ["true"]
+          "enum": ["admin", "writer", "editor"],
+          "example": "writer"
+        },
+        "verified": {
+          "type": "boolean",
+          "example": true
         },
         "name": {
           "type": "string",
-          "required": ["true"]
+          "example": "Bobby Thorson"
         },
         "email": {
           "type": "string",
-          "required": ["true"]
+          "example": "dummy@example.com"
         },
         "password": {
           "type": "string",
-          "required": ["true"]
+          "example": "60ab93748hg93989"
         },
-        "role": {
-          "type": "Role",
-          "required": ["true"]
+        "verificationCode": {
+          "type": "string",
+          "example": "euyeyHJGVUOIJHUIOjhuKuipIOp..."
         },
         "imageUrl": {
-          "type": "string",
-          "required": ["false"]
+          "type": "string"
         }
       }
     }
