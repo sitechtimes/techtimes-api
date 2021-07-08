@@ -1,4 +1,3 @@
-import { randomBytes } from 'crypto';
 import nodemailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
 import jwt from "jsonwebtoken";
@@ -14,6 +13,7 @@ export class Verify {
    static async sendVerificationEmail(email: String, code: String){
        const transport = nodemailer.createTransport(smtpTransport({
            host: 'smtp.gmail.com',
+           service: 'gmail.com',
            port: 587,
            secure: false,
            auth: {
@@ -22,7 +22,6 @@ export class Verify {
            }
        }));
 
-       // TODO: change url to localhost when running on local
        let mailOptions = {
            from: process.env.EMAIL_USER,
            to: email.toString(),

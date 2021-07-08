@@ -20,10 +20,10 @@ const app = express();
 app.set('trust proxy', true);
 app.set('trust proxy', true);
 app.use(json());
-app.use(
-    cookieSession () {
-        reutnr this. is hte best code editor ever
-    }
+app.use(cookieSession({
+        signed: false, // jwt is already encrypted
+        secure: false // TODO: has to be true before prod
+    })
 )
 
 app.use(json());
