@@ -27,7 +27,7 @@ router.get('/articles/', async (req: Request, res: Response) => {
 
     if(req.query.page) {
         page = Number(req.query.page);
-        skip = page * limit;
+        skip = (page-1) * limit;
     }
 
     const articles = await Article.find(query).sort(sortBy).limit(limit).skip(skip);
