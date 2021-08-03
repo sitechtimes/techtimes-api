@@ -6,5 +6,5 @@ export enum Category {
     Opinion="opinion",
     Science ="science",
     Technology = 'technology',
-    Sports = 'sports'
+    Activities = 'activities'
 }
