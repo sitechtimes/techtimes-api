@@ -22,6 +22,10 @@ functions:
           method: ANY
 
 custom:
+  warmup:
+    default:
+      enabled: true
+
   domain:
     dev: 'dev-api.sitechtimes.com'
     prod: 'api.sitechtimes.com'
@@ -39,6 +43,8 @@ custom:
     path: .././.env.${opt:stage}
 
 plugins:
+  - serverless-plugin-warmup-ts-bridge
+  - serverless-plugin-warmup
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-dotenv-plugin
