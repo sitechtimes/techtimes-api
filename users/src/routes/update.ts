@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import {NotAuthorizedError, NotFoundError, requireAuth} from "../../../shared";
+import {NotAuthorizedError, NotFoundError, requireAuth} from "@sitechtimes/shared";
 import {User} from "../models/user";
 import {Role} from "../models/role";
 import {connectToDatabase} from "../index";

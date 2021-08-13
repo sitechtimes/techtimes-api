@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
 import {Draft} from "../models/draft";
-import {requireAuth} from "../../../shared";
+import {requireAuth} from "@sitechtimes/shared";
 import {connectToDatabase} from "../index";
 
 const router = express.Router();

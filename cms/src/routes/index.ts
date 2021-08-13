@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import {requireAuth} from "../../../shared";
+import {requireAuth} from "@sitechtimes/shared";
 import {Draft} from "../models/draft";
 import {connectToDatabase} from "../index";
 
