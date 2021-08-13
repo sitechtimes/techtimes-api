@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import cookieSession from "cookie-session";
 import cors from 'cors';
 
-import {currentUser, errorHandler, NotFoundError} from "@sitechtimes/shared";
+import {currentUser, errorHandler, NotFoundError} from "../../shared";
 import {indexArticleRouter} from "./routes";
 import serverless from 'serverless-http';
 import {showArticleRouter} from "./routes/show";

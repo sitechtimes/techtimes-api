@@ -6,7 +6,7 @@ import cookieSession from "cookie-session";
 import cors from 'cors';
 import serverless from 'serverless-http';
 
-import {errorHandler, NotFoundError, currentUser} from "@sitechtimes/shared";
+import {errorHandler, NotFoundError, currentUser} from "../../shared";
 import {showUserRouter} from "./routes/show";
 import {usersRouter} from "./routes";
 import {deleteUserRouter} from "./routes/delete";

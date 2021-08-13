@@ -1,5 +1,5 @@
 import express, {Request, Response} from 'express';
-import {NotFoundError, requireAuth, roles} from "@sitechtimes/shared";
+import {NotFoundError, requireAuth, roles} from "../../../shared";
 import mongoose from "mongoose";
 import {connectToDatabase} from "../index";
 

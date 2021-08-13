@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import {currentUser} from "@sitechtimes/shared";
+import {currentUser} from "../../../shared";
 
 const router = express.Router();
 

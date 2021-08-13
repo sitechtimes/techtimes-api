@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import jwt, {decode} from 'jsonwebtoken';
 
 import {User} from "../models/user";
-import {BadRequestError, NotFoundError} from "@sitechtimes/shared";
+import {BadRequestError, NotFoundError} from "../../../shared";
 import {connectToDatabase} from "../index";
 
 const router = express.Router();
