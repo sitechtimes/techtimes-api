@@ -1,0 +1,31 @@
+{
+  "name": "@sitechtimes/shared",
+  "version": "1.0.20",
+  "description": "",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "del ./build/*",
+    "pub": "git add . && git commit -m \"Updates\" && npm version patch && npm run build && npm publish"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cookie-session": "^2.0.42",
+    "@types/express": "^4.17.11",
+    "@types/express-validator": "^3.0.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "cookie-session": "^1.4.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "del-cli": "^3.0.1",
+    "typescript": "^4.1.5"
+  }
+}

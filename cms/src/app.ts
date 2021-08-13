@@ -5,7 +5,7 @@ import cookieSession from "cookie-session";
 import cors from 'cors';
 import serverless from 'serverless-http';
 
-import {errorHandler, NotFoundError, currentUser } from "@sitechtimes/shared";
+import {errorHandler, NotFoundError, currentUser } from "../../shared";
 import {createDraftRouter} from "./routes/new";
 import {showDraftRouter} from "./routes/show";
 import {indexDraftRouter} from "./routes";

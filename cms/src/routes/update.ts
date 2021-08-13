@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import {BadRequestError, CustomError, NotAuthorizedError, NotFoundError, requireAuth} from "@sitechtimes/shared";
+import {BadRequestError, CustomError, NotAuthorizedError, NotFoundError, requireAuth} from "../../../shared";
 import {Role} from "../models/role";
 import {DraftStatus} from "../models/draftStatus";
 import {Draft} from "../models/draft";

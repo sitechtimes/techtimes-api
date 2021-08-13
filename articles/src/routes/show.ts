@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { Article } from "../models/article";
 import {connectToDatabase} from "../index";
-import {NotFoundError} from "@sitechtimes/shared";
+import {NotFoundError} from "../../../shared";
 
 const router = express.Router();
 

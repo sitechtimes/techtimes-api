@@ -1,4 +1,4 @@
-import {requireAuth, roles} from "@sitechtimes/shared";
+import {requireAuth, roles} from "../../../shared";
 import express, {Request, Response} from "express";
 import {Draft} from "../models/draft";
 import {DraftStatus} from "../models/draftStatus";
