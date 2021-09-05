@@ -13,7 +13,6 @@ provider:
 functions:
   api:
     handler: src/app.slsApp
-    provisionedConcurrency: 3
     events:
       - http:
           path: /
@@ -23,11 +22,6 @@ functions:
           method: ANY
 
 custom:
-  warmup:
-    default:
-      enabled: true
-      events:
-        - schedule: rate(5 minutes)
 
   domain:
     dev: 'dev-api.sitechtimes.com'
@@ -46,8 +40,6 @@ custom:
     path: .././.env.${opt:stage}
 
 plugins:
-  - serverless-plugin-warmup-ts-bridge
-  - serverless-plugin-warmup
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-dotenv-plugin
