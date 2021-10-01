@@ -36,17 +36,16 @@ router.post('/auth/signup'
         throw new BadRequestError('Email is in use');
     }
 
-
     const randString = await Verify.generateToken(email);
     //Problem with this crap ^^
 
-    // const user = User.build({ name, email, password, verificationCode: randString });
-    // await user.save();
+    const user = User.build({ name, email, password, verificationCode: randString });
+    await user.save();
 
-    // await Verify.sendVerificationEmail(email, randString);
+    await Verify.sendVerificationEmail(email, randString);
 
-    // res.status(201).send(user.toJSON())
-    res.status(201).send('test');
+    res.status(201).send(user.toJSON())
+    // res.status(201).send('test');
 
 });
 

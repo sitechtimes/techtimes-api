@@ -1,11 +1,13 @@
 import request from 'supertest';
 import { app } from '../../app';
+import {Verify} from "../../services/verify";
+//PRIORITY, CHANGE "connectToDatabase" and "verify.ts" (in services) can read info from env file.
 
 it('returns a 201 on successful signup', async () => {
     let smth= request(app).post('/auth/signup')
         .send({
             name: "Test Name",
-            email: 'test@sitechhs.com',
+            email: 'bussin@sitechhs.com',
             password: '123456789'
         })
         .expect(201);
@@ -60,7 +62,7 @@ it('returns a 400 if signup with existing email is attempted', async () => {
     await request(app).post('/auth/signup')
         .send({
             name: "Test Name",
-            email: 'test@sitechhs.com',
+            email: 'ongod@sitechhs.com',
             password: 'password'
         })
         .expect(201);
@@ -68,7 +70,7 @@ it('returns a 400 if signup with existing email is attempted', async () => {
     await request(app).post('/auth/signup')
         .send({
             name: "Test Name",
-            email: 'test@sitechhs.com',
+            email: 'ongod@sitechhs.com',
             password: 'password',
         })
         .expect(400);
