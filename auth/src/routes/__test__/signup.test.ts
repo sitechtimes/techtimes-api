@@ -1,15 +1,17 @@
 import request from 'supertest';
 import { app } from '../../app';
 
-// it('returns a 201 on successful signup', async () => {
-//     return request(app).post('/auth/signup')
-//         .send({
-//             name: "Test Name",
-//             email: 'test@sitechhs.com',
-//             password: 'password'
-//         })
-//         .expect(201);
-// });
+it('returns a 201 on successful signup', async () => {
+    let smth= request(app).post('/auth/signup')
+        .send({
+            name: "Test Name",
+            email: 'test@sitechhs.com',
+            password: '123456789'
+        })
+        .expect(201);
+
+    return smth
+});
 
 it('returns a 400 with an invalid formatted email', async () => {
     return request(app).post('/auth/signup')
@@ -63,7 +65,7 @@ it('returns a 400 if signup with existing email is attempted', async () => {
         })
         .expect(201);
 
-    await request(app).post('/api/auth/signup')
+    await request(app).post('/auth/signup')
         .send({
             name: "Test Name",
             email: 'test@sitechhs.com',
