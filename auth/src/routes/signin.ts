@@ -41,7 +41,8 @@ router.post('/auth/signin',
         role: existingUser.role
     }
 
-    const userJWT = jwt.sign(payload, process.env.JWT_KEY!);
+    // const userJWT = jwt.sign(payload, process.env.JWT_KEY!);
+    const userJWT = jwt.sign(payload, "something");
 
     req.session = {
         jwt: userJWT

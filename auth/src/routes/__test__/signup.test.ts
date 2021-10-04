@@ -88,7 +88,5 @@ it('sets a cookie after a successful signup', async () => {
         })
         .expect(201);
 
-    console.log(Object.keys(response.text))
-
-    expect(response).toBeDefined();
+    expect(JSON.parse(response.text).id).toBeDefined();
 });
