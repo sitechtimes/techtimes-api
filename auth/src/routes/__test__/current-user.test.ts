@@ -1,5 +1,6 @@
 import request from 'supertest';
 import {app} from "../../app";
+import faker from "faker";
 
 // it('returns current user if authenticated', async () => {
 //     const cookie = await global.signin();
