@@ -1,0 +1,21 @@
+{
+    "req": {
+        "method": "GET",
+        "url": "http://127.0.0.1:60538/auth/verify/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkxpbGEuV2lzb3prNTVAeWFob28uY29tIiwiaWF0IjoxNjMzNDUzOTE0LCJleHAiOjE2MzM0NTUxMTR9.Mm3XLyQHEfZc3axaU_zQIaIKPDR0Bwii2F_tA-azpuU",
+        "headers": {}
+    },
+    "header": {
+        "x-powered-by": "Express",
+        "access-control-allow-origin": "*",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "561",
+        "etag": "W/\"231-j+327ShrV0aYQ/DA7NLxIv4em7I\"",
+        "set-cookie": [
+            "express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TldNNE56VmhaRFJoTVdGbU1qZGxZek0xTm1Ga1lpSXNJbVZ0WVdsc0lqb2lUR2xzWVM1WGFYTnZlbXMxTlVCNVlXaHZieTVqYjIwaUxDSnliMnhsSWpvaWQzSnBkR1Z5SWl3aWFXRjBJam94TmpNek5EVXpPVEUwTENKbGVIQWlPakUyTXpNME56VTFNVFI5LkJrdU1uTjVuYVBWRXJpQzRyUEloUHJCNS03V2FRcDB1TVJvQjhfZXAwdTgifQ==; path=/; httponly"
+        ],
+        "date": "Tue, 05 Oct 2021 17:11:54 GMT",
+        "connection": "close"
+    },
+    "status": 200,
+    "text": "{\"role\":\"writer\",\"verified\":true,\"name\":\"Test Name\",\"email\":\"Lila.Wisozk55@yahoo.com\",\"verificationCode\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkxpbGEuV2lzb3prNTVAeWFob28uY29tIiwiaWF0IjoxNjMzNDUzOTE0LCJleHAiOjE2MzM0NTUxMTR9.Mm3XLyQHEfZc3axaU_zQIaIKPDR0Bwii2F_tA-azpuU\",\"id\":\"615c875ad4a1af27ec356adb\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNWM4NzVhZDRhMWFmMjdlYzM1NmFkYiIsImVtYWlsIjoiTGlsYS5XaXNvems1NUB5YWhvby5jb20iLCJyb2xlIjoid3JpdGVyIiwiaWF0IjoxNjMzNDUzOTE0LCJleHAiOjE2MzM0NzU1MTR9.BkuMnN5naPVEriC4rPIhPrB5-7WaQp0uMRoB8_ep0u8\"}"
+}

@@ -26,12 +26,7 @@ it('returns current user if authenticated', async () => {
         .set('Cookie', cookie).send()
         .expect(200);
 
-    // console.log(response)
-    console.log(Object.keys(response))
-    console.log(response.body)
-    console.log(response.text)
-    console.log(response.res)
-
+    //literally no idea what this is doing
     expect(response.body.currentUser.email).toEqual(email);
 });
 

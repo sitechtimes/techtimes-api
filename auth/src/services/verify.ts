@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export class Verify {
 
    static async generateToken(email: String) {
-        return jwt.sign({email}, "tempsecret", {
+        return jwt.sign({email}, "something", {
             expiresIn: '20m'
         });
    }
