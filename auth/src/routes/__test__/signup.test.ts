@@ -77,7 +77,6 @@ it('returns a 400 if signup with existing email is attempted', async () => {
         .expect(400);
 });
 
-//
 it('sets a cookie after a successful signup', async () => {
     let email = faker.internet.email()
     const response:any =  await request(app).post('/auth/signup')

@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
 import faker from "faker";
-//PRIORITY, CHANGE "connectToDatabase" and "verify.ts" (in services) can read info from env file.
-//USER.TS DONT DELETE THE VERIFICATION CODE FOR toJSON
+//PRIORITY, CHANGE everything in routes so that they can read info from env file.
+//USER.TS send verification email is disabled for testing.
 
 it('verify with valid verificationCode returns 200', async () => {
     let email = faker.internet.email()
