@@ -7,6 +7,7 @@ import {Homepage} from "../models/homepage";
 import {Article} from "../models/article";
 import {Position} from "../models/position";
 import {Draft} from "../models/draft";
+import axios from "axios";
 
 const router = express.Router();
 
@@ -60,6 +61,8 @@ router.post('/cms/:id/publish', requireAuth, roles(['admin']), async (req: Reque
 
         await homepage.save();
     }
+
+    await axios.post(process.env.BUILD_HOOK!, {});
 
     res.sendStatus(200);
 });
