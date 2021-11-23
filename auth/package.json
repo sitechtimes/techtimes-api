@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
-    "test": "jest --watchAll --no-cache"
+    "test": "cross-env JWT_KEY='somekeyhere' MONGO_URI='mongodb://localhost:27017/techtimes' EMAIL_USER='something' EMAIL_PASSWORD='something' URL='https://dev-cms.sitechtimes.com' npx jest --verbose false --no-cache"
   },
   "jest": {
     "preset": "ts-jest",
@@ -29,6 +29,7 @@
     "@types/nodemailer-smtp-transport": "^2.7.4",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",

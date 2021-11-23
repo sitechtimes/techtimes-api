@@ -33,7 +33,7 @@ router.get('/auth/verify/:token', async (req: Request, res: Response) => {
         role: user.role
     };
 
-    const userJWT = jwt.sign(payload, "something", { expiresIn: '6h' });
+    const userJWT = jwt.sign(payload, process.env.JWT_KEY!, { expiresIn: '6h' });
 
     req.session = {
         jwt: userJWT

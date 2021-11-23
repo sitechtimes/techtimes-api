@@ -27,6 +27,8 @@ it('returns current user if authenticated', async () => {
         .expect(200);
 
     //literally no idea what this is doing
+    console.log(response.body)
+    console.log(response.headers)
     expect(response.body.currentUser.email).toEqual(email);
 });
 

@@ -41,8 +41,7 @@ router.post('/auth/signin',
         role: existingUser.role
     }
 
-    // const userJWT = jwt.sign(payload, process.env.JWT_KEY!);
-    const userJWT = jwt.sign(payload, "something");
+    const userJWT = jwt.sign(payload, process.env.JWT_KEY!);
 
     req.session = {
         jwt: userJWT
@@ -55,4 +54,3 @@ router.post('/auth/signin',
 });
 
 export { router as signinRouter };
-
