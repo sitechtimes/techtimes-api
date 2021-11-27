@@ -26,7 +26,7 @@ it('creates an account with editor/admin permission', async () => {
 
 });
 
-it('fetch articles for review || DOES NOT WORK YET, REQUIRES ROLE ADMIN FOR THE USER TO DO SO', async()=>{
+it('fetch articles for review || DOES NOT WORK, CANNOT FIND A WAY TO CHANGE ROLE TO ADMIN ', async()=>{
     await request(app).post('/cms/review/')
         .set({authorization: authorizationToken})
         .expect(200)

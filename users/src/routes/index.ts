@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import {NotAuthorizedError, requireAuth, roles} from "@sitechtimes/shared";
 import {Role} from "../models/role";
-import {User} from "../models/user";
+import {User} from "../../../auth/src/models/user";
 import {connectToDatabase} from "../index";
 
 const router = express.Router();

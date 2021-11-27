@@ -26,7 +26,7 @@ it('creates an account with admin role for ready test', async () => {
 
 });
 
-it('fetches drafts that are ready || DOES NOT WORK YET, REQUIRES ROLE ADMIN FOR THE USER TO DO SO', async()=>{
+it('fetches drafts that are ready || DOES NOT WORK, CANNOT FIND A WAY TO CHANGE ROLE TO ADMIN ', async()=>{
     await request(app).get('/cms/ready/')
         .set({authorization: token})
         .expect(200)

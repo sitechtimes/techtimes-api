@@ -4,9 +4,9 @@ import request from 'supertest';
 import faker from "faker";
 
 var token:string;
-var articleID:String;
+var userID:string;
 
-it('creates a new article for publish test', async () => {
+it('creates a new account for user delete test', async () => {
     let email = faker.internet.email()
     await request(authApp).post('/auth/signup')
         .send({
@@ -24,18 +24,21 @@ it('creates a new article for publish test', async () => {
         .expect(200);
 
     token = JSON.parse(signinResponse.text).token
-
-    let article = await request(app).post('/cms/')
-        .set({authorization: token})
-
-    articleID = JSON.parse(article.text).id
-
-    expect(article.status).toBe(201)
-
+    userID = JSON.parse(signinResponse.text).id
 });
 
-it('publishes an article || DOES NOT WORK, CANNOT FIND A WAY TO CHANGE ROLE TO ADMIN ', async()=>{
-    await request(app).post(`/cms/${articleID}/publish`)
+it('deletes the user', async()=>{
+
+    await request(app).delete(`/users/${userID}`)
         .set({authorization: token})
-        .expect(200)
+        .expect(204)
+
+})
+
+it('deletes the user without right authorization', async()=>{
+
+    await request(app).delete(`/users/${userID}`)
+        .set({authorization: "Random user authorization token that you literally cant get by chance"})
+        .expect(401)
+        
 })

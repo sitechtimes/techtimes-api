@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --poll src/index.ts"
+    "start": "ts-node-dev --poll src/index.ts",
+    "test": "cross-env JWT_KEY='somekeyhere' MONGO_URI='mongodb://localhost:27017/techtimes' EMAIL_USER='something' EMAIL_PASSWORD='something' URL='https://dev-cms.sitechtimes.com' npx jest --verbose false --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sitechtimes/shared": "^1.0.23",
+    "@sitechtimes/shared": "^1.0.27",
     "@types/cookie-session": "^2.0.42",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
@@ -18,10 +23,12 @@
     "@types/mongoose": "^5.10.5",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-validator": "^6.11.1",
+    "faker": "^5.5.3",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.12",
@@ -32,6 +39,7 @@
     "typescript": "^4.3.2"
   },
   "devDependencies": {
+    "@types/faker": "^5.5.9",
     "@types/jest": "^26.0.23",
     "@types/supertest": "^2.0.11",
     "@types/swagger-ui-express": "^4.1.2",

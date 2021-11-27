@@ -4,9 +4,9 @@ import request from 'supertest';
 import faker from "faker";
 
 var token:string;
-var articleID:String;
+var userID:string;
 
-it('creates a new article for publish test', async () => {
+it('creates a new account for user index test', async () => {
     let email = faker.internet.email()
     await request(authApp).post('/auth/signup')
         .send({
@@ -21,21 +21,25 @@ it('creates a new article for publish test', async () => {
             email: email,
             password: '123456789'
         })
-        .expect(200);
 
     token = JSON.parse(signinResponse.text).token
+    userID = JSON.parse(signinResponse.text).id
 
-    let article = await request(app).post('/cms/')
-        .set({authorization: token})
-
-    articleID = JSON.parse(article.text).id
-
-    expect(article.status).toBe(201)
-
+    expect(signinResponse.status).toEqual(200)
 });
 
-it('publishes an article || DOES NOT WORK, CANNOT FIND A WAY TO CHANGE ROLE TO ADMIN ', async()=>{
-    await request(app).post(`/cms/${articleID}/publish`)
+it('returns 200 when get users with permission || DOES NOT WORK, CANNOT FIND A WAY TO CHANGE ROLE TO ADMIN ', async()=>{
+
+    await request(app).get(`/users/`)
         .set({authorization: token})
         .expect(200)
+
+})
+
+it('returns 401 when get users without permission', async()=>{
+
+    await request(app).get(`/users/`)
+        .set({authorization: token})
+        .expect(401)
+
 })
