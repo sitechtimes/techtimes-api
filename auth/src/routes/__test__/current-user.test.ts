@@ -1,6 +1,7 @@
 import request from 'supertest';
 import {app} from "../../app";
 import faker from "faker";
+import { EmitFlags } from 'typescript';
 
 it('returns current user if authenticated', async () => {
 
@@ -20,18 +21,14 @@ it('returns current user if authenticated', async () => {
         })
         .expect(200);
 
-    const cookie = JSON.parse(signin.text)
-
-    console.log(cookie)
+    const token = JSON.parse(signin.text).token
 
     const response:any = await request(app).get('/auth/current-user')
-        .set('Cookie', cookie).send()
+        .set({authorization: token})
         .expect(200);
 
     //literally no idea what this is doing
-    console.log(response.body)
-    console.log(response.headers)
-    expect(response.body.currentUser.email).toEqual(email);
+    expect(response.body.email).toEqual(email);
 });
 
 it('returns null if not authenticated', async () => {
@@ -39,5 +36,5 @@ it('returns null if not authenticated', async () => {
         .send()
         .expect(200);
 
-    expect(response.body.currentUser).toEqual(null);
+    expect(response.body.email).toEqual(undefined);
 });

@@ -57,6 +57,7 @@ router.put('/cms/:id/', requireAuth, async (req: Request, res: Response) => {
     await draft.save();
 
     res.send(draft);
+
 });
 
 export { router as updateDraftRouter };

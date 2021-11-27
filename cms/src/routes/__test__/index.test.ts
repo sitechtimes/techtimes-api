@@ -3,7 +3,10 @@ import {app as authApp} from "../../../../auth/src/app"
 import request from 'supertest';
 import faker from "faker";
 
-it('creates a new article with authorization token', async () => {
+var token:string;
+var draft:any;
+
+it('creates a new article for index test', async () => {
     let email = faker.internet.email()
     await request(authApp).post('/auth/signup')
         .send({
@@ -20,14 +23,22 @@ it('creates a new article with authorization token', async () => {
         })
         .expect(200);
 
-    const token = JSON.parse(signinResponse.text).token
+    token = JSON.parse(signinResponse.text).token
 
-    await request(app).post('/cms/')
+    let response = await request(app).post('/cms/')
         .set({authorization: token})
         .expect(201)
+
+    draft = JSON.parse(response.text)
 });
 
-it('creates an article without authorization token', async()=>{
-    await request(app).post('/cms/')
-        .expect(401)
+it("finds the draft", async()=>{
+    let response = await request(app).get('/cms/')
+        .set({authorization: token})
+        .expect(200)
+
+    let articles = JSON.parse(response.text)
+
+    expect(articles).toContainEqual(draft)
 })
+

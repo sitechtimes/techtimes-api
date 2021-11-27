@@ -6,7 +6,7 @@ import {connectToDatabase} from "../index";
 const router = express.Router();
 
 router.post('/cms/', 
-// requireAuth, 
+requireAuth, 
 async (req: Request, res: Response) => {
     await connectToDatabase();
 

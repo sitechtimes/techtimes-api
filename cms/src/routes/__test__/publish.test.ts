@@ -3,7 +3,10 @@ import {app as authApp} from "../../../../auth/src/app"
 import request from 'supertest';
 import faker from "faker";
 
-it('creates a new article with authorization token', async () => {
+var token:string;
+var articleID:String;
+
+it('creates a new article for publish test', async () => {
     let email = faker.internet.email()
     await request(authApp).post('/auth/signup')
         .send({
@@ -20,14 +23,19 @@ it('creates a new article with authorization token', async () => {
         })
         .expect(200);
 
-    const token = JSON.parse(signinResponse.text).token
+    token = JSON.parse(signinResponse.text).token
 
-    await request(app).post('/cms/')
+    let article = await request(app).post('/cms/')
         .set({authorization: token})
-        .expect(201)
+
+    articleID = JSON.parse(article.text).id
+
+    expect(article.status).toBe(201)
+
 });
 
-it('creates an article without authorization token', async()=>{
-    await request(app).post('/cms/')
-        .expect(401)
+it('publishes an article || DOES NOT WORK YET, REQUIRES ROLE ADMIN FOR THE USER TO DO SO', async()=>{
+    await request(app).post(`/cms/${articleID}/publish`)
+        .set({authorization: token})
+        .expect(200)
 })
