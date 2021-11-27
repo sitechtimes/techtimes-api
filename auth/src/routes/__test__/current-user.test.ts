@@ -22,6 +22,8 @@ it('returns current user if authenticated', async () => {
 
     const cookie = JSON.parse(signin.text)
 
+    console.log(cookie)
+
     const response:any = await request(app).get('/auth/current-user')
         .set('Cookie', cookie).send()
         .expect(200);

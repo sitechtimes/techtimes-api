@@ -53,4 +53,4 @@ app.all('*', (req: Request, res: Response) => {
 app.use(errorHandler)
 
 const slsApp = serverless(app);
-export { slsApp };
+export { app, slsApp };

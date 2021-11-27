@@ -5,7 +5,9 @@ import {connectToDatabase} from "../index";
 
 const router = express.Router();
 
-router.post('/cms/', requireAuth, async (req: Request, res: Response) => {
+router.post('/cms/', 
+// requireAuth, 
+async (req: Request, res: Response) => {
     await connectToDatabase();
 
     const draft = Draft.build({

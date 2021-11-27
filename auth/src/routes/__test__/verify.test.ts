@@ -33,7 +33,6 @@ it('verify with valid verificationCode returns 200', async () => {
 
 it('verify with invalid verificationCode returns 404', async () => {
 
-
     await request(app).get(`/auth/verify/${faker.random.alphaNumeric(50)}`)
         .expect(404);
     

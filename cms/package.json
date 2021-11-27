@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
-    "test": "cross-env JWT_KEY=somekeyhere MONGO_URI=mongodb://localhost:27017/techtimes EMAIL_USER=something EMAIL_PASSWORD=something URL=https://dev-cms.sitechtimes.com/ npx jest"
+    "test": "cross-env JWT_KEY='somekeyhere' MONGO_URI='mongodb://localhost:27017/techtimes' EMAIL_USER='something' EMAIL_PASSWORD='something' URL='https://dev-cms.sitechtimes.com' npx jest --verbose false --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
