@@ -1,0 +1,24 @@
+{
+  "name": "techtimes-api",
+  "version": "1.0.0",
+  "description": "Typescript-Express API powering the TechTimes website 🚀",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitechtimes/techtimes-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sitechtimes/techtimes-api/issues"
+  },
+  "homepage": "https://github.com/sitechtimes/techtimes-api#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  }
+}

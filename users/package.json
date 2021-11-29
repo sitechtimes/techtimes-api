@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
-    "test": "cross-env JWT_KEY='somekeyhere' MONGO_URI='mongodb://localhost:27017/techtimes' EMAIL_USER='something' EMAIL_PASSWORD='something' URL='https://dev-cms.sitechtimes.com' npx jest --verbose false --no-cache"
+    "test": "PLEASE FILL OUT THE ENV AND RUN INIT.JS"  
   },
   "jest": {
     "preset": "ts-jest",
