@@ -2,6 +2,7 @@ import express, {Request, Response} from "express";
 import {Draft} from "../models/draft";
 import {requireAuth} from "@sitechtimes/shared";
 import {connectToDatabase} from "../index";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
