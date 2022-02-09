@@ -1,9 +1,10 @@
 export enum Category {
     COVID = "covid",
     Entertainment ="entertainment",
-    World = 'world',
-    US = 'us',
+    News ="news",
+    Politics="politics",
+    Opinion="opinion",
     Science ="science",
     Technology = 'technology',
-    Sports = 'sports'
+    Activities = 'activities'
 }

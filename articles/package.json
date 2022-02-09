@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "articles",
     "version": "1.0.0",
     "description": "",
@@ -45,3 +46,51 @@
         "ts-node-dev": "^1.1.6"
     }
 }
+=======
+  "name": "articles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev --poll src/index.ts",
+    "test": "jest --watchAll --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sitechtimes/shared": "^1.0.23",
+    "@types/cookie-session": "^2.0.42",
+    "@types/express": "^4.17.11",
+    "@types/jsonwebtoken": "^8.5.1",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^6.11.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.10",
+    "serverless-dotenv-plugin": "^3.9.0",
+    "serverless-http": "^2.7.0",
+    "serverless-offline": "^7.0.0",
+    "serverless-plugin-typescript": "1.1.7",
+    "typescript": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/supertest": "^2.0.11",
+    "jest": "^26.6.3",
+    "serverless-domain-manager": "^5.1.0",
+    "serverless-plugin-warmup": "^5.3.1",
+    "serverless-plugin-warmup-ts-bridge": "^0.1.3",
+    "supertest": "^6.1.3",
+    "ts-jest": "^26.5.6",
+    "ts-node-dev": "^1.1.6"
+  }
+}
+>>>>>>> 0b5294430e96a6305491105d53ce7599d86cdf8a

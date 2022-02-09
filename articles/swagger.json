@@ -1,0 +1,196 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "title": "Articles API",
+    "description": "An API designed to look through a database of articles and retrieve and order them based on queries or slugs. ",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "paths": {
+    "/articles/": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "description": "Get all articles (default settings: top 20 articles sorted by Last Updated)",
+        "parameters": [
+            {
+              "in": "query",
+              "name": "category",
+              "type": "string",
+              "enum":  ["covid", "entertainment", "world", "us", "science", "technology", "sports" ],
+              "description": "The category of the article you're searching for"
+            },
+            {
+              "in": "query",
+              "name": "limit",
+              "default": "20",
+              "type": "integer",
+              "description": "The number of articles that you want to be retrieved"
+            },
+            {
+              "in": "query",
+              "name": "sortBy",
+              "default": "Updated: 1",
+              "type": "string",
+              "description": "The method you sort articles by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all requested articles",
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          }
+        }
+      }
+    },
+    "/articles/{slug}": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Find a single Article matching a particular slug",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "type": "string",
+            "description": "Slug is needed to idenitfy individual"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved Article",
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          },
+          "404": {
+            "description": "No Article matching the slug was found"
+          }
+        }
+      }
+    },
+    "/articles/homepage": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Find all articles assigned to the homepage matching a category and position",
+        "parameters": [
+          {
+            "enum": ["covid", "entertainment", "world", "us", "science", "technology", "sports" ],         
+            "in": "query",
+            "name": "category",
+            "type": "string",
+            "description": "The category is what the article is about. Only Three articles of each category will appear on the homepage"
+          },
+          {
+            "enum": ["main", "sub", "detail"],    
+            "in": "query",
+            "name": "position",
+            "type": "string",
+            "description": "The position defines where this article will be on the homepage - there are three positions to choose from"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success - retrieved homepage article",
+            "schema": {
+              "$ref": "#/definitions/Homepage"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+      "Article": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "http://res.cloudinary.com/sitechtimes/image/upload/v1622036165/sitecht..."
+          },
+          "title": {
+            "type": "string",
+            "example": "CS Project Showcase",
+            "description": "The Title of the article"
+          },
+          "content": {
+            "type": "string",
+            "example": "<p>This is where you should write the content of your article ...</p><...",
+            "description": "The content of the article"
+          },
+          "category": {
+            "type": "string",
+            "example": "Technology",
+            "enum": ["COVID", "Entertainment", "World", "US", "Science", "Technology", "Sports" ]
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string",
+                "example": "Bobby Thorson"
+              },
+              "imageUrl": {
+                "type": "string"
+              }
+            }
+          },
+          "slug": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-05-26T13:37:42.534+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-05-26T13:37:42.534+00:00"
+          }
+        }
+      },
+      "Homepage": {
+        "allOf": [
+          {
+            "$ref": "#/definitions/Article"
+          },
+          {
+            "properties": {
+            "position": {
+              "type": "string",
+              "enum": ["main", "sub", "detail"]
+            }
+          }
+          }
+        ]
+      },
+      "Category": {
+        "type": "string",
+        "enum": ["covid", "entertainment", "world", "us", "science", "technology", "sports" ]
+      }
+
+  }
+}

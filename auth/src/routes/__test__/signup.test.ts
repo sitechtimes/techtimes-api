@@ -4,7 +4,20 @@ import faker from "faker";
 //PRIORITY, CHANGE "connectToDatabase" and "verify.ts" (in services) can read info from env file.
 
 it('returns a 201 on successful signup', async () => {
+<<<<<<< HEAD
     let email = faker.internet.email()
+=======
+    return request(app).post('/auth/signup')
+        .send({
+            name: "Test Name",
+            email: 'test@sitechhs.com',
+            password: 'password'
+        })
+        .expect(201)
+});
+
+it('returns a 400 with an invalid formatted email', async () => {
+>>>>>>> 0b5294430e96a6305491105d53ce7599d86cdf8a
     return request(app).post('/auth/signup')
         .send({
             name: "Test Name",

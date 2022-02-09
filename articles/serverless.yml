@@ -22,6 +22,7 @@ functions:
           method: ANY
 
 custom:
+
   domain:
     dev: 'dev-api.sitechtimes.com'
     prod: 'api.sitechtimes.com'

@@ -16,40 +16,334 @@
   ],
   "swagger": "2.0",
   "paths": {
-    "/api/cms": {
+    "/cms/": {
       "get": {
         "tags": [
           "Drafts"
         ],
-        "summary": "Get all the drafts in system for a specific user",
+        "summary": "Lists all the drafts a user currently has of all kinds",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Successfully retrieved all of a users drafts"
+          },
+          "401": {
+            "description": "(Not Authorized Error) Only a User who is signed in (has a currentUser) can make this call, otherwise if a user is not signed in it will return an error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Drafts"
+        ],
+        "summary": "Create a new draft",
+        "responses": {
+          "201": {
+            "description": "Created a new draft and Saved it successfully"
+          },
+          "401": {
+            "description": "(Not Authorized Error) Only a User who is signed in (has a currentUser) can make this call, otherwise if a user is not signed in it will return an error"
+          }
+        }
+      }
+    },
+    "/cms/categories": {
+      "get": {
+        "tags": [
+          "Drafts"
+        ],
+        "summary": "Lists all possible categories a User can choose for a draft",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved categories",
             "schema": {
-              "$ref": "#/definitions/Draft"
+                "properties": {
+                  "covid": {
+                    "type": "string"
+                  },
+                   "entertainment": {
+                    "type": "string"
+                  },
+                   "world": {
+                    "type": "string"
+                  },
+                   "us": {
+                    "type": "string"
+                  },
+                   "science": {
+                    "type": "string"
+                  },
+                   "technology": {
+                    "type": "string"
+                  },
+                   "sports": {
+                     "type": "string"
+                   }
+                  }
+              }
+          }
+        }
+      }
+    },
+    "/cms/{id}/": {
+      "delete": {
+        "tags": [
+          "Drafts"
+        ],
+        "summary": "Deletes a Draft based on it's ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted draft"
+          },
+          "401": {
+            "description": "(Not Authorized Error) A User can only delete their own drafts, so if the current user's id doesn't match the author of the draft it won't delete"
+          },
+          "404": {
+            "description": "(Not Found Error) The Draft with the ID used could not be found "
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Drafts"
+        ],
+        "summary": "Gets an article with a certain ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved draft"
+          },
+          "401": {
+            "description": "(Not Authorized Error) A User can only see their own drafts, so if the current user's id doesn't match the author of the draft it cannot be viewable"
+          },
+          "404": {
+            "description": "(Not Found Error) The Draft with the ID used could not be found "
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Drafts"
+        ],
+        "summary": "Gets an article with a certain ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["draft", "review", "ready"]
+                },
+                "imageUrl": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string",
+                  "enum": ["COVID", "Entertainment", "World", "US", "Science", "Technology", "Sports"]
+                },
+                "imageAlt": {
+                  "type": "string"
+                }   
+              }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully edited draft"
+          },
+          "401": {
+            "description": "(Not Authorized Error) A User can only edit their own drafts, so if the current user's id doesn't match the author of the draft it cannot be edited"
+          },
+          "404": {
+            "description": "(Not Found Error) The Draft with the ID used could not be found "
+          }
+        }
+      }
+    },
+    "/cms/{id}/publish": {
+      "post": {
+        "tags": [
+          "Publish"
+        ],
+        "summary": "Publishes a draft article - moving it into the Article database and if it was selected for the homepage it will also be moved to a position there",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "position",
+            "type": "string",
+            "enum": ["main", "sub", "detail"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully Published the draft as a full article"
+          },
+          "401": {
+            "description": "(Not Authorized Error) Only a user with the admin role who is signed in can publish a draft article"
+          },
+          "404": {
+            "description": "(Not Found Error) The Draft with the ID used could not be found"
+          }
+        }
+      }
+    },
+    "/cms/ready": {
+      "get": {
+        "tags": [
+          "Publish"
+        ],
+        "summary": "Only shows draft articles that are ready to be published (Draft Status = Ready)",
+        "responses": {
+          "200": {
+            "description": "Successfully Retrieved all ready articles currently in the database"
+          },
+          "401": {
+            "description": "(Not Authorized Error) Only an Admin can make this call"
+          }
+        }
+      }
+    },
+    "/cms/review": {
+      "get": {
+        "tags": [
+          "Review"
+        ],
+        "summary": "Only shows draft articles that are being reviewed or awaiting review by an editor or admin (Draft Status = Review)",
+        "responses": {
+          "200": {
+            "description": "Successfully Retrieved all articles under review"
+          },
+          "401": {
+            "description": "(Not Authorized Error) Only an Admin who is signed in can make this call"
           }
         }
       }
     }
   },
   "definitions": {
-    "Draft": {
+    "Article": {
       "type": "object",
       "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string",
+          "example": "http://res.cloudinary.com/sitechtimes/image/upload/v1622036165/sitecht..."
+        },
         "title": {
+          "type": "string",
+          "example": "CS Project Showcase",
+          "description": "The Title of the article"
+        },
+        "content": {
+          "type": "string",
+          "example": "<p>This is where you should write the content of your article ...</p><...",
+          "description": "The content of the article"
+        },
+        "category": {
+          "type": "string",
+          "example": "Technology",
+          "enum": ["COVID", "Entertainment", "World", "US", "Science", "Technology", "Sports" ]
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string",
+              "example": "Bobby Thorson"
+            },
+            "imageUrl": {
+              "type": "string"
+            }
+          }
+        },
+        "slug": {
           "type": "string"
         },
-        "name": {
-          "type": "string"
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2021-05-26T13:37:42.534+00:00"
         },
-        "isHungry": {
-          "type": "boolean"
-        },
-        "lastFedDate": {
-          "type": "string"
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2021-05-26T13:37:42.534+00:00"
         }
       }
+    },
+    "Homepage": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Article"
+        },
+        {
+          "properties": {
+          "position": {
+            "type": "string",
+            "enum": ["main", "sub", "detail"]
+          }
+        }
+        }
+      ]
+    },
+    "Draft": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Article"
+        },
+        {
+          "properties": {
+          "draftstatus": {
+            "type": "string",
+            "enum": ["draft", "ready", "review"]
+          }
+        }
+        }
+      ]
+    },
+    "Category": {
+      "type": "string",
+      "enum": ["covid", "entertainment", "world", "us", "science", "technology", "sports" ]
     }
   }
 }
