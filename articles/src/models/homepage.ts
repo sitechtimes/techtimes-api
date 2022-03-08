@@ -25,6 +25,7 @@ export interface HomepageDoc extends mongoose.Document {
     title: string;
     content: string;
     imageUrl: string;
+    imageAlt: string;
     category: string;
     user: {
         id: string;
