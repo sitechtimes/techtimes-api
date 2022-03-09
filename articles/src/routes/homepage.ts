@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import {connectToDatabase} from "../index";
-import {Homepage} from "../models/homepage";
+// import {Homepage} from "../models/homepage";
+import { Article } from "../models/article";
 
 const router = express.Router();
 
@@ -17,7 +18,8 @@ router.get('/articles/homepage', async (req: Request, res: Response) => {
         query.position = req.query.position.toString();
     }
 
-    const homepages = await Homepage.find(query);
+    // const homepages = await Homepage.find(query);
+    const homepages = await Article.find(query);
     res.send(homepages);
 });
 
