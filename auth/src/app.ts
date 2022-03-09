@@ -45,4 +45,4 @@ app.use(errorHandler)
 
 const slsApp = serverless(app);
 
-export { slsApp };
+export { slsApp, app };

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, {Types} from 'mongoose';
 import {DraftStatus} from "./draftStatus";
 import {Category} from "./category";
 
@@ -16,6 +16,7 @@ export interface DraftDoc extends mongoose.Document {
     title: string;
     content: string;
     userId: string;
+    userName: string;
     imageUrl: string;
     imageAlt: string;
     status: DraftStatus;
@@ -54,6 +55,10 @@ const draftSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
+    },
+    userName: {
+        type: String,
+        required: false
     }
 }, {
     timestamps: true,

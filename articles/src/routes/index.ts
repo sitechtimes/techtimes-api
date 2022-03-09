@@ -10,6 +10,8 @@ router.get('/articles/', async (req: Request, res: Response) => {
     let query: any = {};
     let limit = 20;
     let sortBy = { updatedAt: 1 };
+    let page = 1;
+    let skip = 0;
 
     if(req.query.category) {
         query.category = req.query.category.toString();
@@ -23,7 +25,12 @@ router.get('/articles/', async (req: Request, res: Response) => {
         sortBy = { updatedAt: -1 };
     }
 
-    const articles = await Article.find(query).sort(sortBy).limit(limit);
+    if(req.query.page) {
+        page = Number(req.query.page);
+        skip = (page-1) * limit;
+    }
+
+    const articles = await Article.find(query).sort(sortBy).limit(limit).skip(skip);
 
     res.status(200).send(articles);
 });

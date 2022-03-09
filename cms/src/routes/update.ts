@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import {NotAuthorizedError, NotFoundError, requireAuth} from "@sitechtimes/shared";
+import {BadRequestError, CustomError, NotAuthorizedError, NotFoundError, requireAuth} from "@sitechtimes/shared";
 import {Role} from "../models/role";
 import {DraftStatus} from "../models/draftStatus";
 import {Draft} from "../models/draft";
@@ -25,6 +25,11 @@ router.put('/cms/:id/', requireAuth, async (req: Request, res: Response) => {
     if (draft.userId == req.currentUser!.id) {
         // TODO - refactor update logic
         const title = req.body.title == undefined ? draft.title : sanitize(req.body.title)
+
+        if (title.length > 75){
+            throw new BadRequestError('Title must be longer than 75 characters');
+        }
+
         const content = req.body.content == undefined ? draft.content : sanitize(req.body.content)
 
         const status = req.body.status == DraftStatus.Review ? req.body.status : draft.status
